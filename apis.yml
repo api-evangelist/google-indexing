@@ -1,0 +1,46 @@
+name: Google Indexing API
+description: >-
+  The Google Indexing API allows site owners to directly notify Google when
+  pages are added or removed. It enables requesting crawling for updated
+  content and notifying of page removals, leading to fresher content in
+  search results. Primarily intended for sites with job postings or
+  livestream structured data.
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/google-indexing/refs/heads/main/apis.yml
+created: '2026-03-13'
+modified: '2026-03-13'
+specificationVersion: '0.18'
+tags:
+  - Indexing
+  - Search
+  - SEO
+  - Crawling
+  - URLs
+  - Google
+apis:
+  - name: Google Indexing API
+    description: >-
+      Allows site owners to notify Google directly when pages are updated or
+      removed, enabling faster crawling and fresher search results for job
+      postings and livestream content.
+    humanURL: https://developers.google.com/search/apis/indexing-api/v3/quickstart
+    baseURL: https://indexing.googleapis.com/v3
+    properties:
+      - type: OpenAPI
+        url: openapi/openapi.yml
+      - type: JSONSchema
+        url: json-schema/UrlNotification.json
+    tags:
+      - Indexing
+      - URLs
+      - Crawling
+common:
+  - type: GettingStarted
+    url: https://developers.google.com/search/apis/indexing-api/v3/quickstart
+  - type: Pricing
+    url: https://developers.google.com/search/apis/indexing-api/v3/prereqs
+  - type: JSON-LD
+    url: json-ld/context.jsonld
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

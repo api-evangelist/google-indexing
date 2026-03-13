@@ -1,0 +1,19 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "indexing": "https://indexing.googleapis.com/v3/",
+    "WebPage": "schema:WebPage",
+    "url": "schema:url",
+    "dateModified": "schema:dateModified",
+    "datePublished": "schema:datePublished",
+    "Action": "schema:Action",
+    "UpdateAction": "schema:UpdateAction",
+    "DeleteAction": "schema:DeleteAction",
+    "actionStatus": "schema:actionStatus",
+    "target": "schema:target",
+    "startTime": "schema:startTime",
+    "WebSite": "schema:WebSite",
+    "name": "schema:name",
+    "description": "schema:description"
+  }
+}

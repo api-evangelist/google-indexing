@@ -1,0 +1,116 @@
+openapi: 3.1.0
+info:
+  title: Google Indexing API
+  description: >-
+    The Google Indexing API allows site owners to notify Google when pages are
+    added or removed. It enables direct notification to Google to crawl pages,
+    leading to fresher content in search results. It is primarily intended for
+    websites with job postings or livestream structured data.
+  version: 3.0.0
+  contact:
+    name: Google
+    url: https://developers.google.com/search/apis/indexing-api/v3/quickstart
+servers:
+  - url: https://indexing.googleapis.com/v3
+paths:
+  /urlNotifications:publish:
+    post:
+      operationId: publishUrlNotification
+      summary: Publish URL Notification
+      description: >-
+        Notifies Google that a URL has been updated or removed. Use URL_UPDATED
+        to request crawling, or URL_DELETED to indicate a page has been removed.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UrlNotification'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublishUrlNotificationResponse'
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+        '429':
+          description: Too many requests
+  /urlNotifications/metadata:
+    get:
+      operationId: getUrlNotificationMetadata
+      summary: Get URL Notification Metadata
+      description: >-
+        Gets metadata about a URL, including the latest notification timestamps
+        and type.
+      parameters:
+        - name: url
+          in: query
+          required: true
+          description: The URL to get notification metadata for.
+          schema:
+            type: string
+            format: uri
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UrlNotificationMetadata'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            https://www.googleapis.com/auth/indexing: Submit URLs to Google indexing
+  schemas:
+    UrlNotification:
+      type: object
+      required:
+        - url
+        - type
+      properties:
+        url:
+          type: string
+          format: uri
+          description: The URL to notify Google about.
+        type:
+          type: string
+          description: The type of notification.
+          enum:
+            - URL_UPDATED
+            - URL_DELETED
+        notifyTime:
+          type: string
+          format: date-time
+          description: The time of the notification.
+    PublishUrlNotificationResponse:
+      type: object
+      properties:
+        urlNotificationMetadata:
+          $ref: '#/components/schemas/UrlNotificationMetadata'
+    UrlNotificationMetadata:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: The URL for which metadata is returned.
+        latestUpdate:
+          $ref: '#/components/schemas/UrlNotification'
+        latestRemove:
+          $ref: '#/components/schemas/UrlNotification'
+security:
+  - OAuth2: []

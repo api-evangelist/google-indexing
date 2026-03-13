@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "UrlNotification.json",
+  "title": "Google Indexing URL Notification",
+  "description": "A URL notification for the Google Indexing API to request crawling or removal.",
+  "type": "object",
+  "required": ["url", "type"],
+  "properties": {
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "The URL to notify Google about."
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of notification.",
+      "enum": [
+        "URL_UPDATED",
+        "URL_DELETED"
+      ]
+    },
+    "notifyTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The time of the notification."
+    }
+  }
+}
