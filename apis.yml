@@ -1,5 +1,5 @@
 aid: google-indexing
-name: Google Indexing API
+name: Google Indexing
 description: >-
   The Google Indexing API allows site owners to directly notify Google when
   pages are added or removed. It enables requesting crawling for updated
