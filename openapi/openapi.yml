@@ -16,7 +16,7 @@ paths:
   /urlNotifications:publish:
     post:
       operationId: publishUrlNotification
-      summary: Publish URL Notification
+      summary: Google Indexing Publish URL Notification
       description: >-
         Notifies Google that a URL has been updated or removed. Use URL_UPDATED
         to request crawling, or URL_DELETED to indicate a page has been removed.
@@ -42,7 +42,7 @@ paths:
   /urlNotifications/metadata:
     get:
       operationId: getUrlNotificationMetadata
-      summary: Get URL Notification Metadata
+      summary: Google Indexing Get URL Notification Metadata
       description: >-
         Gets metadata about a URL, including the latest notification timestamps
         and type.
