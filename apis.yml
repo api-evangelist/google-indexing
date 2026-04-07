@@ -13,12 +13,12 @@ modified: '2026-03-16'
 specificationVersion: '0.19'
 type: Index
 tags:
+  - Crawling
+  - Google
   - Indexing
   - Search
   - SEO
-  - Crawling
   - URLs
-  - Google
 apis:
   - name: Google Indexing API
     description: >-
@@ -28,9 +28,9 @@ apis:
     humanURL: https://developers.google.com/search/apis/indexing-api/v3/quickstart
     baseURL: https://indexing.googleapis.com/v3
     tags:
+      - Crawling
       - Indexing
       - URLs
-      - Crawling
     properties:
       - type: Documentation
         url: https://developers.google.com/search/apis/indexing-api/v3/reference/rest
