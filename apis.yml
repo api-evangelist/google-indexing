@@ -9,7 +9,7 @@ description: >-
 image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/google-indexing/refs/heads/main/apis.yml
 created: '2026-03-13'
-modified: '2026-03-16'
+modified: '2026-04-28'
 specificationVersion: '0.19'
 type: Index
 tags:
@@ -42,6 +42,8 @@ apis:
         url: https://developers.google.com/search/apis/indexing-api/v3/quickstart
       - type: JSONSchema
         url: json-schema/UrlNotification.json
+      - type: Spectral Rules
+        url: rules/google-indexing-spectral-rules.yml
 common:
   - type: Portal
     url: https://developers.google.com/search/apis/indexing-api
