@@ -1,0 +1,113 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Google Indexing API
+  description: The Google Indexing API allows site owners to notify Google when pages are added or removed. It enables direct
+    notification to Google to crawl pages, leading to fresher content in search results. It is primarily intended for websites
+    with job postings or livestream structured data.
+  tags:
+  - Google
+  - Indexing
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: google-indexing
+    baseUri: https://indexing.googleapis.com/v3
+    description: Google Indexing API HTTP API.
+    authentication:
+      type: bearer
+      token: '{{GOOGLE_INDEXING_TOKEN}}'
+    resources:
+    - name: urlnotifications-publish
+      path: /urlNotifications:publish
+      operations:
+      - name: publishurlnotification
+        method: POST
+        description: Google Indexing Publish URL Notification
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: urlnotifications-metadata
+      path: /urlNotifications/metadata
+      operations:
+      - name: geturlnotificationmetadata
+        method: GET
+        description: Google Indexing Get URL Notification Metadata
+        inputParameters:
+        - name: url
+          in: query
+          type: string
+          required: true
+          description: The URL to get notification metadata for.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: google-indexing-rest
+    description: REST adapter for Google Indexing API.
+    resources:
+    - path: /urlNotifications:publish
+      name: publishurlnotification
+      operations:
+      - method: POST
+        name: publishurlnotification
+        description: Google Indexing Publish URL Notification
+        call: google-indexing.publishurlnotification
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /urlNotifications/metadata
+      name: geturlnotificationmetadata
+      operations:
+      - method: GET
+        name: geturlnotificationmetadata
+        description: Google Indexing Get URL Notification Metadata
+        call: google-indexing.geturlnotificationmetadata
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: google-indexing-mcp
+    transport: http
+    description: MCP adapter for Google Indexing API for AI agent use.
+    tools:
+    - name: publishurlnotification
+      description: Google Indexing Publish URL Notification
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: google-indexing.publishurlnotification
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: geturlnotificationmetadata
+      description: Google Indexing Get URL Notification Metadata
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: google-indexing.geturlnotificationmetadata
+      with:
+        url: tools.url
+      inputParameters:
+      - name: url
+        type: string
+        description: The URL to get notification metadata for.
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+binds:
+- namespace: env
+  keys:
+    GOOGLE_INDEXING_TOKEN: GOOGLE_INDEXING_TOKEN
