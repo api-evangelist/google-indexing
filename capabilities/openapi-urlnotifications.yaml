@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Google Indexing API — urlNotifications
+  description: 'Google Indexing API — urlNotifications. 1 operations. Lead operation: Google Indexing Get URL Notification
+    Metadata. Self-contained Naftiko capability covering one Google Indexing business surface.'
+  tags:
+  - Google Indexing
+  - urlNotifications
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    GOOGLE_INDEXING_API_KEY: GOOGLE_INDEXING_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: openapi-urlnotifications
+    baseUri: https://indexing.googleapis.com/v3
+    description: Google Indexing API — urlNotifications business capability. Self-contained, no shared references.
+    resources:
+    - name: urlNotifications-metadata
+      path: /urlNotifications/metadata
+      operations:
+      - name: geturlnotificationmetadata
+        method: GET
+        description: Google Indexing Get URL Notification Metadata
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: url
+          in: query
+          type: string
+          description: The URL to get notification metadata for.
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.GOOGLE_INDEXING_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: openapi-urlnotifications-rest
+    port: 8080
+    description: REST adapter for Google Indexing API — urlNotifications. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/urlnotifications/metadata
+      name: urlnotifications-metadata
+      description: REST surface for urlNotifications-metadata.
+      operations:
+      - method: GET
+        name: geturlnotificationmetadata
+        description: Google Indexing Get URL Notification Metadata
+        call: openapi-urlnotifications.geturlnotificationmetadata
+        with:
+          url: rest.url
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: openapi-urlnotifications-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Google Indexing API — urlNotifications. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: google-indexing-get-url-notification
+      description: Google Indexing Get URL Notification Metadata
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: openapi-urlnotifications.geturlnotificationmetadata
+      with:
+        url: tools.url
+      outputParameters:
+      - type: object
+        mapping: $.
