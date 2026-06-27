@@ -39,7 +39,7 @@ apis:
         url: https://developers.google.com/search/apis/indexing-api/v3/quickstart
       - type: JSONSchema
         url: json-schema/UrlNotification.json
-      - type: Spectral Rules
+      - type: SpectralRules
         url: rules/google-indexing-spectral-rules.yml
 common:
   - type: Portal
