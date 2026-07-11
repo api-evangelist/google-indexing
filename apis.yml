@@ -42,6 +42,12 @@ apis:
       - type: SpectralRules
         url: rules/google-indexing-spectral-rules.yml
 common:
+  - type: VulnerabilityDisclosure
+    url: security/google-indexing-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/google-indexing-domain-security.yml
+  - type: Authentication
+    url: authentication/google-indexing-authentication.yml
   - type: OAuthScopes
     url: scopes/google-indexing-scopes.yml
   - type: Portal
