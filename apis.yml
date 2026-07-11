@@ -42,6 +42,8 @@ apis:
       - type: SpectralRules
         url: rules/google-indexing-spectral-rules.yml
 common:
+  - type: OAuthScopes
+    url: scopes/google-indexing-scopes.yml
   - type: Portal
     url: https://developers.google.com/search/apis/indexing-api
   - type: GettingStarted
