@@ -1,54 +1,130 @@
+# google-indexing — Spectral ruleset (strengthened)
+# Plain Spectral. Existing hand-authored rules preserved; measured rules added
+# from this provider's own OpenAPI conventions by strengthen_ruleset.py,
+# then self-validated against the spec.
+#
+# Provenance:
+#   - servers-https-only: 100% of servers already https (error)
+#   - servers-expected-domain: 1/1 servers on googleapis.com
+#   - schema-names-casing: pascal @ 100% (n=3)
+#   - security: global (root) — NOT emitting operation-security-required
+#   - merge: kept 13 existing, added 3 measured, upgraded 0
+#   - added: servers-expected-domain, schema-names-casing, security-schemes-defined
+extends:
+  - spectral:oas
 rules:
   info-title-required:
     severity: error
     given: $.info
-    then: {field: title, function: truthy}
+    then:
+      field: title
+      function: truthy
   info-description-required:
     severity: error
     given: $.info
-    then: {field: description, function: truthy}
+    then:
+      field: description
+      function: truthy
   info-version-required:
     severity: error
     given: $.info
-    then: {field: version, function: truthy}
+    then:
+      field: version
+      function: truthy
   servers-defined:
     severity: error
     given: $
-    then: {field: servers, function: truthy}
+    then:
+      field: servers
+      function: truthy
   servers-https-only:
     severity: error
     given: $.servers[*].url
-    then: {function: pattern, functionOptions: {match: "^https://"}}
+    then:
+      function: pattern
+      functionOptions:
+        match: ^https://
   paths-no-trailing-slash:
     severity: error
     given: $.paths
-    then: {field: "@key", function: pattern, functionOptions: {notMatch: "\\/$"}}
+    then:
+      field: '@key'
+      function: pattern
+      functionOptions:
+        notMatch: \/$
   operation-description-required:
     severity: error
     given: $.paths[*][get,post,put,patch,delete]
-    then: {field: description, function: truthy}
+    then:
+      field: description
+      function: truthy
   operation-operationid-required:
     severity: error
     given: $.paths[*][get,post,put,patch,delete]
-    then: {field: operationId, function: truthy}
+    then:
+      field: operationId
+      function: truthy
   operation-operationid-unique:
     severity: error
     given: $
-    then: {function: oasOpId}
+    then:
+      function: oasOpId
   tags-title-case:
     severity: info
     given: $.tags[*].name
-    then: {function: pattern, functionOptions: {match: "^[A-Z][a-zA-Z0-9]*(\\s[A-Za-z0-9]+)*$"}}
+    then:
+      function: pattern
+      functionOptions:
+        match: ^[A-Z][a-zA-Z0-9]*(\s[A-Za-z0-9]+)*$
   response-success-required:
     severity: error
     given: $.paths[*][get,post,put,patch,delete].responses
-    then: {function: schema, functionOptions: {schema: {anyOf: [{required: ["200"]}, {required: ["201"]}, {required: ["204"]}]}}}
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+          - required:
+            - '200'
+          - required:
+            - '201'
+          - required:
+            - '204'
   deprecated-description:
     severity: warn
     description: Deprecated operations should explain the deprecation.
     given: $.paths[*][get,post,put,patch,delete][?(@.deprecated==true)]
-    then: {field: description, function: pattern, functionOptions: {match: "[Dd]eprecated|[Ss]unset"}}
+    then:
+      field: description
+      function: pattern
+      functionOptions:
+        match: '[Dd]eprecated|[Ss]unset'
   no-empty-descriptions:
     severity: error
-    given: "$..description"
-    then: {function: truthy}
+    given: $..description
+    then:
+      function: truthy
+  servers-expected-domain:
+    description: Server URLs should be on the googleapis.com domain.
+    severity: warn
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: googleapis\.com
+  schema-names-casing:
+    description: Component schema names should be PascalCase (the dominant convention in this API).
+    severity: warn
+    given: $.components.schemas
+    then:
+      field: '@key'
+      function: casing
+      functionOptions:
+        type: pascal
+  security-schemes-defined:
+    description: Security schemes should be defined in components.
+    severity: warn
+    given: $.components
+    then:
+      field: securitySchemes
+      function: truthy
