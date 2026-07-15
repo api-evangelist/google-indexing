@@ -42,6 +42,8 @@ apis:
       - type: SpectralRules
         url: rules/google-indexing-spectral-rules.yml
 common:
+  - type: AgenticAccess
+    url: agentic-access/google-indexing-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/google-indexing-vulnerability-disclosure.yml
   - type: DomainSecurity
