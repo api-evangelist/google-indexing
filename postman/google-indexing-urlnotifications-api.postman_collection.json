@@ -1,0 +1,234 @@
+{
+  "info": {
+    "_postman_id": "b9f1c86e-5fa9-407b-8d88-d1b8549ca6eb",
+    "name": "Google Indexing urlNotifications API",
+    "description": "The Google Indexing API allows site owners to notify Google when pages are added or removed. It enables direct notification to Google to crawl pages, leading to fresher content in search results. It is primarily intended for websites with job postings or livestream structured data.\n\nContact Support:\n Name: Google",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:49:13.000Z",
+    "updatedAt": "2026-07-28T01:49:14.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-b9f1c86e-5fa9-407b-8d88-d1b8549ca6eb"
+  },
+  "item": [
+    {
+      "name": "urlNotifications",
+      "item": [
+        {
+          "name": "metadata",
+          "item": [
+            {
+              "name": "Google Indexing Get URL Notification Metadata",
+              "id": "7fff00d7-3f4a-4903-b398-38276afc6914",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/urlNotifications/metadata?url=<uri>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "urlNotifications",
+                    "metadata"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The URL to get notification metadata for.",
+                      "key": "url",
+                      "value": "<uri>"
+                    }
+                  ]
+                },
+                "description": "Gets metadata about a URL, including the latest notification timestamps and type."
+              },
+              "response": [
+                {
+                  "id": "bf4841d2-47b2-4564-8e2d-2946f13b5d4d",
+                  "name": "Successful response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/urlNotifications/metadata?url=<uri>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "urlNotifications",
+                        "metadata"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The URL to get notification metadata for.",
+                          "key": "url",
+                          "value": "<uri>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"url\": \"<uri>\",\n  \"latestUpdate\": {\n    \"url\": \"<uri>\",\n    \"type\": \"URL_DELETED\",\n    \"notifyTime\": \"<dateTime>\"\n  },\n  \"latestRemove\": {\n    \"url\": \"<uri>\",\n    \"type\": \"URL_UPDATED\",\n    \"notifyTime\": \"<dateTime>\"\n  }\n}",
+                  "createdAt": "2026-07-28T01:49:14.000Z",
+                  "updatedAt": "2026-07-28T01:49:14.000Z",
+                  "uid": "35240-bf4841d2-47b2-4564-8e2d-2946f13b5d4d"
+                },
+                {
+                  "id": "921d97d7-0df0-4a9f-ab22-a22c0dffb648",
+                  "name": "Forbidden",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/urlNotifications/metadata?url=<uri>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "urlNotifications",
+                        "metadata"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The URL to get notification metadata for.",
+                          "key": "url",
+                          "value": "<uri>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T01:49:14.000Z",
+                  "updatedAt": "2026-07-28T01:49:14.000Z",
+                  "uid": "35240-921d97d7-0df0-4a9f-ab22-a22c0dffb648"
+                },
+                {
+                  "id": "6bc34516-a5a7-4b64-b8f1-f0068647fba2",
+                  "name": "Not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/urlNotifications/metadata?url=<uri>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "urlNotifications",
+                        "metadata"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) The URL to get notification metadata for.",
+                          "key": "url",
+                          "value": "<uri>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T01:49:14.000Z",
+                  "updatedAt": "2026-07-28T01:49:14.000Z",
+                  "uid": "35240-6bc34516-a5a7-4b64-b8f1-f0068647fba2"
+                }
+              ],
+              "createdAt": "2026-07-28T01:49:14.000Z",
+              "updatedAt": "2026-07-28T01:49:14.000Z",
+              "uid": "35240-7fff00d7-3f4a-4903-b398-38276afc6914"
+            }
+          ],
+          "id": "e4f68be5-9dc0-4650-a288-271a7f58c937",
+          "createdAt": "2026-07-28T01:49:14.000Z",
+          "updatedAt": "2026-07-28T01:49:14.000Z",
+          "uid": "35240-e4f68be5-9dc0-4650-a288-271a7f58c937"
+        }
+      ],
+      "id": "a64b5e52-322f-4115-ba8e-35251cc63d82",
+      "createdAt": "2026-07-28T01:49:14.000Z",
+      "updatedAt": "2026-07-28T01:49:14.000Z",
+      "uid": "35240-a64b5e52-322f-4115-ba8e-35251cc63d82"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "https://www.googleapis.com/auth/indexing",
+        "type": "string"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://oauth2.googleapis.com/token",
+        "type": "string"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://accounts.google.com/o/oauth2/auth",
+        "type": "string"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://indexing.googleapis.com/v3"
+    }
+  ]
+}

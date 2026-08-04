@@ -1,0 +1,16 @@
+{
+  "provider": "google-indexing",
+  "sources": [
+    "google-indexing-urlnotifications-api-openapi.yml",
+    "google-indexing-urlnotifications-publish-api-openapi.yml"
+  ],
+  "outputs": [
+    "google-indexing-urlnotifications-api-openapi.yml",
+    "google-indexing-urlnotifications-publish-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

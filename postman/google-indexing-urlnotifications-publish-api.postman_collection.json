@@ -1,0 +1,296 @@
+{
+  "info": {
+    "_postman_id": "3995bb7a-d193-48cb-a1cb-a6b8508bea67",
+    "name": "Google Indexing urlNotifications urlNotifications:publish API",
+    "description": "The Google Indexing API allows site owners to notify Google when pages are added or removed. It enables direct notification to Google to crawl pages, leading to fresher content in search results. It is primarily intended for websites with job postings or livestream structured data.\n\nContact Support:\n Name: Google",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:49:14.000Z",
+    "updatedAt": "2026-07-28T01:49:15.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-3995bb7a-d193-48cb-a1cb-a6b8508bea67"
+  },
+  "item": [
+    {
+      "name": "urlNotifications:publish",
+      "item": [
+        {
+          "name": "Google Indexing Publish URL Notification",
+          "id": "63405943-bf47-4dce-a634-2898e3c17fb7",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"<uri>\",\n  \"type\": \"URL_DELETED\",\n  \"notifyTime\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/urlNotifications:publish",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "urlNotifications:publish"
+              ]
+            },
+            "description": "Notifies Google that a URL has been updated or removed. Use URL_UPDATED to request crawling, or URL_DELETED to indicate a page has been removed."
+          },
+          "response": [
+            {
+              "id": "6fa1e72c-6a61-409e-8939-cb1a859da738",
+              "name": "Successful response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"<uri>\",\n  \"type\": \"URL_DELETED\",\n  \"notifyTime\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/urlNotifications:publish",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "urlNotifications:publish"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"urlNotificationMetadata\": {\n    \"url\": \"<uri>\",\n    \"latestUpdate\": {\n      \"url\": \"<uri>\",\n      \"type\": \"URL_UPDATED\",\n      \"notifyTime\": \"<dateTime>\"\n    },\n    \"latestRemove\": {\n      \"url\": \"<uri>\",\n      \"type\": \"URL_UPDATED\",\n      \"notifyTime\": \"<dateTime>\"\n    }\n  }\n}",
+              "createdAt": "2026-07-28T01:49:15.000Z",
+              "updatedAt": "2026-07-28T01:49:15.000Z",
+              "uid": "35240-6fa1e72c-6a61-409e-8939-cb1a859da738"
+            },
+            {
+              "id": "6da6e655-97ca-4c5c-ae9b-8a614e337560",
+              "name": "Bad request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"<uri>\",\n  \"type\": \"URL_DELETED\",\n  \"notifyTime\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/urlNotifications:publish",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "urlNotifications:publish"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T01:49:15.000Z",
+              "updatedAt": "2026-07-28T01:49:15.000Z",
+              "uid": "35240-6da6e655-97ca-4c5c-ae9b-8a614e337560"
+            },
+            {
+              "id": "0c79ce1c-ab58-4c00-a923-be62b91f49f7",
+              "name": "Forbidden",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"<uri>\",\n  \"type\": \"URL_DELETED\",\n  \"notifyTime\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/urlNotifications:publish",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "urlNotifications:publish"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T01:49:15.000Z",
+              "updatedAt": "2026-07-28T01:49:15.000Z",
+              "uid": "35240-0c79ce1c-ab58-4c00-a923-be62b91f49f7"
+            },
+            {
+              "id": "8c2b656d-768a-4236-9045-6fc287f0b39e",
+              "name": "Too many requests",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: oauth2",
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"<uri>\",\n  \"type\": \"URL_DELETED\",\n  \"notifyTime\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/urlNotifications:publish",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "urlNotifications:publish"
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": null,
+              "createdAt": "2026-07-28T01:49:15.000Z",
+              "updatedAt": "2026-07-28T01:49:15.000Z",
+              "uid": "35240-8c2b656d-768a-4236-9045-6fc287f0b39e"
+            }
+          ],
+          "createdAt": "2026-07-28T01:49:15.000Z",
+          "updatedAt": "2026-07-28T01:49:15.000Z",
+          "uid": "35240-63405943-bf47-4dce-a634-2898e3c17fb7"
+        }
+      ],
+      "id": "8cfa2635-5719-4e57-a7e6-a670c1eb108a",
+      "createdAt": "2026-07-28T01:49:15.000Z",
+      "updatedAt": "2026-07-28T01:49:15.000Z",
+      "uid": "35240-8cfa2635-5719-4e57-a7e6-a670c1eb108a"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "https://www.googleapis.com/auth/indexing",
+        "type": "string"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://oauth2.googleapis.com/token",
+        "type": "string"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://accounts.google.com/o/oauth2/auth",
+        "type": "string"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://indexing.googleapis.com/v3"
+    }
+  ]
+}
