@@ -1,26 +1,32 @@
 aid: google-indexing
 name: Google Indexing
 description: >-
-  The Google Indexing API allows site owners to directly notify Google when pages are added or removed. It enables
-  requesting crawling for updated content and notifying of page removals, leading to fresher content in search results.
-  Primarily intended for sites with job postings or livestream structured data.
+  The Google Indexing API lets a site owner tell Google directly when a page has been added, updated, or removed,
+  instead of waiting for a crawl. It is a two-operation API — publish a URL notification, and read back the latest
+  notification metadata for a URL. Google restricts its use to pages carrying JobPosting structured data, or
+  BroadcastEvent embedded in a VideoObject. It is free of charge, capped by default at 200 publish requests per day
+  per Google Cloud project, and gated on Search Console ownership verification rather than on price.
 accessModel:
-  pricing: freemium
+  pricing: free
   onboarding: self-serve
   trial: false
   try_now: true
   public: false
-  label: Freemium · Self-serve signup
+  label: Free · Self-serve signup, eligibility-gated
   confidence: high
   source:
   - plans
   - authentication
-  generated: '2026-07-22'
-  method: derived
+  generated: '2026-08-13'
+  method: searched
+  note: >-
+    Corrected from `freemium` on 2026-08-13. Google's quota and pricing page states "All use of the Indexing API is
+    available without payment." There are no paid tiers. The real gate is content eligibility plus Search Console
+    delegated site ownership, not a paywall.
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/google-indexing.png
 url: https://raw.githubusercontent.com/api-evangelist/google-indexing/refs/heads/main/apis.yml
 created: '2026-03-13'
-modified: '2026-05-19'
+modified: '2026-08-13'
 specificationVersion: '0.19'
 type: Index
 tags:
@@ -41,8 +47,14 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/google-indexing-urlnotifications-api-openapi.yml
+  - type: DiscoveryDocument
+    url: openapi/_original/google-indexing-discovery-v3.json
+  - type: Overlay
+    url: overlays/google-indexing-urlnotifications-api-overlay.yaml
   - type: Documentation
-    url: https://developers.google.com/search/apis/indexing-api/v3/reference/rest
+    url: https://developers.google.com/search/apis/indexing-api/v3/using-api
+  - type: APIReference
+    url: https://developers.google.com/search/apis/indexing-api/v3/reference/indexing/rest/v3/urlNotifications
   - type: Authentication
     url: https://developers.google.com/search/apis/indexing-api/v3/prereqs
   - type: GettingStarted
@@ -62,8 +74,14 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/google-indexing-urlnotifications-publish-api-openapi.yml
+  - type: DiscoveryDocument
+    url: openapi/_original/google-indexing-discovery-v3.json
+  - type: Overlay
+    url: overlays/google-indexing-urlnotifications-publish-api-overlay.yaml
   - type: Documentation
-    url: https://developers.google.com/search/apis/indexing-api/v3/reference/rest
+    url: https://developers.google.com/search/apis/indexing-api/v3/using-api
+  - type: APIReference
+    url: https://developers.google.com/search/apis/indexing-api/v3/reference/indexing/rest/v3/urlNotifications
   - type: Authentication
     url: https://developers.google.com/search/apis/indexing-api/v3/prereqs
   - type: GettingStarted
@@ -98,11 +116,62 @@ common:
   - type: PrivacyPolicy
     url: https://policies.google.com/privacy
   - type: StatusPage
-    url: https://status.cloud.google.com/
+    url: https://status.search.google.com/
   - type: Support
-    url: https://developers.google.com/search/apis/indexing-api/v3/support
+    url: https://support.google.com/webmasters/community
   - type: JSONLD
     url: json-ld/context.jsonld
+  - type: APIReference
+    url: https://developers.google.com/search/apis/indexing-api/v3/reference/indexing/rest/v3/urlNotifications
+  - type: Pricing
+    url: https://developers.google.com/search/apis/indexing-api/v3/quota-pricing
+  - type: SignUp
+    url: https://console.cloud.google.com/apis/library/indexing.googleapis.com
+  - type: Blog
+    url: https://developers.google.com/search/blog
+  - type: GitHubOrganization
+    url: https://github.com/googleapis
+  - type: Sandbox
+    url: sandbox/google-indexing-sandbox.yml
+  - type: Packages
+    url: packages/google-indexing-packages.yml
+  - type: SDKs
+    url: packages/google-indexing-packages.yml
+  - type: WellKnown
+    url: well-known/google-indexing-well-known.yml
+  - type: SecurityTxt
+    url: well-known/google-indexing-security.txt
+  - type: Security
+    url: security/google-indexing-vulnerability-disclosure.yml
+  - type: LLMsTxt
+    url: llms/google-indexing-llms.txt
+  - type: Conformance
+    url: conformance/google-indexing-conformance.yml
+  - type: ErrorCatalog
+    url: errors/google-indexing-error-codes.yml
+  - type: Lifecycle
+    url: lifecycle/google-indexing-lifecycle.yml
+  - type: Conventions
+    url: conventions/google-indexing-conventions.yml
+  - type: ChangeLog
+    url: changelog/google-indexing-changelog.yml
+  - type: DataModel
+    url: data-model/google-indexing-data-model.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: Plans
+    url: plans/google-indexing-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/google-indexing-rate-limits.yml
+  - type: FinOps
+    url: finops/google-indexing-finops.yml
+  - type: SpectralRules
+    url: rules/google-indexing-spectral-rules.yml
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 20
+  pass: local-v1
