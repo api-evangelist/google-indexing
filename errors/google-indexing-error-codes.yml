@@ -1,0 +1,170 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.google.com/search/apis/indexing-api/v3/core-errors
+docs: https://developers.google.com/search/apis/indexing-api/v3/core-errors
+provider: Google Indexing
+providerId: google-indexing
+format: google.rpc.Status
+rfc9457: false
+note: >-
+  The Indexing API does NOT use RFC 9457 application/problem+json. It uses the standard Google API error
+  envelope (google.rpc.Status) returned as application/json. The envelope shape below was captured from a
+  live unauthenticated probe on 2026-08-13, not transcribed from docs. The reason-code registry is
+  Google's published global error domain plus the Indexing-API-specific messages.
+envelope:
+  content_type: application/json
+  root: error
+  fields:
+    - name: error.code
+      type: integer
+      description: HTTP status code.
+    - name: error.message
+      type: string
+      description: Human-readable description, often carrying a docs link.
+    - name: error.status
+      type: string
+      description: Canonical google.rpc.Code name, e.g. UNAUTHENTICATED, PERMISSION_DENIED.
+    - name: error.details[]
+      type: array
+      description: Typed detail objects, e.g. type.googleapis.com/google.rpc.ErrorInfo.
+    - name: error.details[].reason
+      type: string
+      description: Machine-readable reason code, e.g. CREDENTIALS_MISSING.
+    - name: error.details[].domain
+      type: string
+      description: Error domain, googleapis.com for global errors.
+    - name: error.details[].metadata
+      type: object
+      description: Service and method that produced the error.
+  observed_example:
+    probed: '2026-08-13'
+    request: GET https://indexing.googleapis.com/v3/urlNotifications/metadata?url=https%3A%2F%2Fexample.com
+    http_status: 401
+    www_authenticate: Bearer realm="https://accounts.google.com/"
+    body:
+      error:
+        code: 401
+        message: >-
+          Request is missing required authentication credential. Expected OAuth 2 access token, login
+          cookie or other valid authentication credential.
+        status: UNAUTHENTICATED
+        details:
+          - '@type': type.googleapis.com/google.rpc.ErrorInfo
+            reason: CREDENTIALS_MISSING
+            domain: googleapis.com
+            metadata:
+              method: google.indexing.v3.UrlService.GetUrlNotificationMetadata
+              service: indexing.googleapis.com
+api_specific_errors:
+  source: https://developers.google.com/search/apis/indexing-api/v3/core-errors
+  note: In every case below the request is rejected and Google does not crawl the URL.
+  errors:
+    - status: 400
+      message: Missing attribute. 'url' attribute is required.
+      cause: The URL was not set in the request body.
+      remediation: Set the required `url` field on the UrlNotification body.
+    - status: 400
+      message: Invalid attribute. 'url' is not in standard URL format
+      cause: A value that is not a URL was supplied.
+      remediation: Send a fully-qualified absolute URL.
+    - status: 400
+      message: Unknown type. 'type' attribute is required and must be 'URL_REMOVED' or 'URL_UPDATED'.
+      cause: The notification type was not set.
+      remediation: Set `type` to URL_UPDATED or URL_DELETED.
+    - status: 400
+      message: Invalid value at 'url_notification.type' (TYPE_ENUM)
+      cause: The notification type was set to a value outside the enum.
+      remediation: Use only the documented enum values.
+    - status: 403
+      message: Permission denied. Failed to verify the URL ownership.
+      cause: >-
+        The calling service account has not completed Search Console ownership verification for the
+        property, or is submitting a URL outside a verified property.
+      remediation: >-
+        Verify the site in Search Console and add the service account email as a delegated owner. See
+        https://developers.google.com/search/apis/indexing-api/v3/prereqs
+global_errors:
+  domain: global
+  source: https://developers.google.com/search/apis/indexing-api/v3/core-errors
+  note: >-
+    Google's global error domain, shared across Google APIs. Only the classes reachable on this API's two
+    operations are enumerated here; the full registry is at the source URL.
+  by_status:
+    - status: 400
+      name: BAD_REQUEST
+      reasons:
+        - code: badRequest
+          description: The API request is invalid or improperly formed.
+        - code: badContent
+          description: The content type of the request data is not supported.
+        - code: invalid
+          description: The request contained an invalid parameter, header or property value.
+        - code: invalidParameter
+          description: The request contained an invalid parameter or parameter value.
+        - code: parseError
+          description: The API server cannot parse the request body.
+        - code: required
+          description: The API request is missing required information.
+    - status: 401
+      name: UNAUTHORIZED
+      reasons:
+        - code: authError
+          description: The authorization credentials provided are invalid or expired.
+        - code: CREDENTIALS_MISSING
+          description: No OAuth 2 access token was supplied. Observed live on 2026-08-13.
+    - status: 403
+      name: FORBIDDEN
+      reasons:
+        - code: forbidden
+          description: The requested operation is forbidden and cannot be completed.
+        - code: accessNotConfigured
+          description: The project is not configured to access this API; enable it in the API Console.
+        - code: insufficientPermissions
+          description: The authenticated principal lacks permission for this request.
+        - code: dailyLimitExceeded
+          description: A daily quota limit for the API has been reached.
+        - code: quotaExceeded
+          description: The operation requires more resources than the quota allows.
+        - code: rateLimitExceeded
+          description: Too many requests have been sent within a given time span.
+        - code: userRateLimitExceeded
+          description: A per-user rate limit has been reached.
+        - code: sslRequired
+          description: SSL is required to perform this operation.
+        - code: unknownAuth
+          description: The API server does not recognize the authorization scheme used.
+    - status: 404
+      name: NOT_FOUND
+      reasons:
+        - code: notFound
+          description: A resource associated with the request could not be found.
+    - status: 429
+      name: TOO_MANY_REQUESTS
+      reasons:
+        - code: rateLimitExceeded
+          description: Too many requests have been sent within a given time span.
+    - status: 500
+      name: INTERNAL_SERVER_ERROR
+      reasons:
+        - code: internalError
+          description: The request failed due to an internal error.
+    - status: 501
+      name: NOT_IMPLEMENTED
+      reasons:
+        - code: notImplemented
+          description: The requested operation has not been implemented.
+        - code: unsupportedMethod
+          description: The request is trying to execute an unknown method or operation.
+    - status: 503
+      name: SERVICE_UNAVAILABLE
+      reasons:
+        - code: backendError
+          description: A backend error occurred.
+        - code: backendNotConnected
+          description: The request failed due to a connection error.
+        - code: notReady
+          description: The API server is not ready to accept requests.
+counts:
+  api_specific: 5
+  global_status_classes: 8
+  global_reasons: 24

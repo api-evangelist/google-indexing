@@ -1,0 +1,162 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — Google Indexing urlNotifications API
+  version: 1.0.0
+extends: ../openapi/google-indexing-urlnotifications-api-openapi.yml
+x-provenance:
+  generated: '2026-08-13'
+  method: generated
+  source: >-
+    https://developers.google.com/search/apis/indexing-api/v3/quota-pricing,
+    https://developers.google.com/search/apis/indexing-api/v3/core-errors,
+    openapi/_original/google-indexing-discovery-v3.json, and a live probe of
+    https://indexing.googleapis.com/v3/urlNotifications/metadata on 2026-08-13
+  note: >-
+    Non-destructive overlay. It never mutates the base document. Everything asserted here was read from
+    Google's published documentation, from the Discovery Document revision 20260805, or observed on a
+    live response — no invented values.
+actions:
+  - target: $.info
+    description: Record the authoritative upstream contract and its revision.
+    update:
+      x-contract-source: https://indexing.googleapis.com/$discovery/rest?version=v3
+      x-contract-format: Google API Discovery Document (discovery#restDescription)
+      x-contract-revision: '20260805'
+      x-contract-captured: '2026-08-13'
+      x-documentation: https://developers.google.com/search/apis/indexing-api/
+      termsOfService: https://developers.google.com/terms
+      x-eligibility: >-
+        Google restricts this API to pages carrying JobPosting structured data, or BroadcastEvent
+        embedded in a VideoObject. Submissions are subject to spam detection.
+
+  - target: $.servers
+    description: Add the mTLS endpoint Google declares in the Discovery Document.
+    update:
+      - url: https://indexing.mtls.googleapis.com/v3
+        description: Mutual-TLS endpoint declared as mtlsRootUrl in the Discovery Document.
+
+  - target: $.paths['/urlNotifications/metadata'].get
+    description: >-
+      Add the real quota, the ownership precondition, and the fact that no rate-limit headers are
+      returned.
+    update:
+      x-rate-limit:
+        scope: per-project
+        limit: 180
+        window: minute
+        name: DefaultMetadataRequestsPerMinutePerProject
+        source: https://developers.google.com/search/apis/indexing-api/v3/quota-pricing
+      x-rate-limit-headers: none
+      x-consequence: read
+      x-precondition: >-
+        Can only query URLs previously seen in successful Indexing API notifications from the same
+        Google Cloud project.
+      x-agentic-access:
+        action-class: read
+        consequence: none
+        scope: https://www.googleapis.com/auth/indexing
+        escalation: not-required
+
+  - target: $.paths['/urlNotifications/metadata'].get.responses
+    description: >-
+      Document the real error envelope. The base spec's 403/404 responses carry no schema; Google returns
+      google.rpc.Status, not RFC 9457 problem+json.
+    update:
+      '401':
+        description: >-
+          Missing or invalid credentials. Returns WWW-Authenticate: Bearer
+          realm="https://accounts.google.com/". Observed live on 2026-08-13 with status UNAUTHENTICATED
+          and reason CREDENTIALS_MISSING.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoogleRpcStatus'
+      '429':
+        description: Rate limit exceeded (reason rateLimitExceeded). No Retry-After header is returned.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoogleRpcStatus'
+
+  - target: $.components.schemas
+    description: Add the google.rpc.Status error envelope the API actually returns.
+    update:
+      GoogleRpcStatus:
+        type: object
+        description: >-
+          Standard Google API error envelope. Captured verbatim from a live 401 on 2026-08-13. This API
+          does not use RFC 9457 application/problem+json.
+        properties:
+          error:
+            type: object
+            properties:
+              code:
+                type: integer
+                description: HTTP status code.
+              message:
+                type: string
+                description: Human-readable description.
+              status:
+                type: string
+                description: Canonical google.rpc.Code name.
+                examples:
+                  - UNAUTHENTICATED
+                  - PERMISSION_DENIED
+                  - RESOURCE_EXHAUSTED
+              details:
+                type: array
+                description: Typed detail objects, e.g. type.googleapis.com/google.rpc.ErrorInfo.
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                    reason:
+                      type: string
+                    domain:
+                      type: string
+                    metadata:
+                      type: object
+
+  - target: $.components.schemas.UrlNotification.properties.type
+    description: Correct the enum against the Discovery Document (revision 20260805).
+    update:
+      enum:
+        - URL_NOTIFICATION_TYPE_UNSPECIFIED
+        - URL_UPDATED
+        - URL_DELETED
+      x-enum-descriptions:
+        URL_NOTIFICATION_TYPE_UNSPECIFIED: Unspecified.
+        URL_UPDATED: The given URL (Web document) has been updated.
+        URL_DELETED: The given URL (Web document) has been deleted.
+
+  - target: $.components.schemas.UrlNotification.properties.notifyTime
+    description: >-
+      Mark notifyTime as read-only; the Discovery Document states it is ignored at request time.
+    update:
+      readOnly: true
+      x-format: google-datetime
+
+  - target: $.components.schemas.UrlNotificationMetadata.properties.latestRemove
+    description: >-
+      Record Google's own wording, which names a type value (URL_REMOVED) that the contract does not
+      declare. The enum value is URL_DELETED.
+    update:
+      description: >-
+        Latest notification received with type URL_DELETED. Google's Discovery Document describes this
+        field as "Latest notification received with type `URL_REMOVED`", which does not match its own
+        declared enum.
+
+  - target: $.components.securitySchemes.OAuth2.flows
+    description: >-
+      Add the service-account JWT-bearer flow, which is the documented onboarding path and is absent
+      from the base spec.
+    update:
+      clientCredentials:
+        tokenUrl: https://oauth2.googleapis.com/token
+        x-grant-type: urn:ietf:params:oauth:grant-type:jwt-bearer
+        x-note: >-
+          Google's documented path is a service account signing a JWT assertion and exchanging it at the
+          token endpoint. See https://developers.google.com/search/apis/indexing-api/v3/prereqs
+        scopes:
+          https://www.googleapis.com/auth/indexing: Submit data to Google for indexing

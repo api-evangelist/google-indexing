@@ -1,0 +1,31 @@
+generated: '2026-08-13'
+method: generated
+source: >-
+  openapi/google-indexing-urlnotifications-publish-api-openapi.yml,
+  openapi/google-indexing-urlnotifications-api-openapi.yml,
+  conventions/google-indexing-conventions.yml, errors/google-indexing-error-codes.yml,
+  rate-limits/google-indexing-rate-limits.yml
+provider: Google Indexing
+providerId: google-indexing
+note: >-
+  Google publishes no AGENTS.md or skill files for the Indexing API (searched 2026-08-13). These two
+  skills are generated from the repo's own artifacts. Both operationIds were grepped out of the OpenAPI
+  documents in openapi/ — none is invented. The API has exactly two operations, so two skills cover the
+  whole surface: one per notification type, because the preconditions and the site-side work genuinely
+  differ between them.
+skills:
+  - file: google-indexing-submit-url-for-crawling.md
+    name: Submit a URL to Google for crawling
+    api: openapi/google-indexing-urlnotifications-publish-api-openapi.yml
+    operations:
+      - publishUrlNotification
+      - getUrlNotificationMetadata
+  - file: google-indexing-remove-url-from-index.md
+    name: Tell Google a page has been removed
+    api: openapi/google-indexing-urlnotifications-publish-api-openapi.yml
+    operations:
+      - publishUrlNotification
+      - getUrlNotificationMetadata
+coverage:
+  operations_total: 2
+  operations_covered: 2

@@ -1,18 +1,103 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/openapi.yml
+generated: '2026-08-13'
+method: searched
+source: https://developers.google.com/search/apis/indexing-api/v3/prereqs
+docs: https://developers.google.com/search/apis/indexing-api/v3/prereqs
+authorizing_docs: https://developers.google.com/search/apis/indexing-api/v3/authorizing
+note: >-
+  Upgraded from derived to searched on 2026-08-13. The OpenAPI-derived baseline captured only the
+  authorizationCode flow. Google's own prerequisites page documents a different primary path — a Google
+  Cloud SERVICE ACCOUNT with a JSON private key, exchanging a signed JWT assertion for an access token —
+  plus a second, non-OAuth authorization gate that no securityScheme can express: the service account
+  must be a delegated site owner on a verified Search Console property. Missing that gate is the single
+  most common failure on this API, and it returns 403, not 401.
 summary:
   types:
-  - oauth2
+    - oauth2
   oauth2_flows:
-  - authorizationCode
+    - authorizationCode
+    - jwt-bearer (service account)
+  api_key_supported: false
+  anonymous_access: false
+  scopes: 1
 schemes:
-- name: OAuth2
-  type: oauth2
-  flows:
-  - flow: authorizationCode
-    authorizationUrl: https://accounts.google.com/o/oauth2/auth
-    tokenUrl: https://oauth2.googleapis.com/token
-    scopes: 1
-  sources:
-  - openapi/openapi.yml
+  - name: OAuth2
+    type: oauth2
+    primary: true
+    flows:
+      - flow: jwt-bearer
+        preferred: true
+        grant_type: urn:ietf:params:oauth:grant-type:jwt-bearer
+        tokenUrl: https://oauth2.googleapis.com/token
+        principal: Google Cloud service account
+        credential: JSON private key downloaded at service-account creation
+        scopes:
+          - https://www.googleapis.com/auth/indexing
+        source: https://developers.google.com/search/apis/indexing-api/v3/prereqs
+        note: >-
+          The documented onboarding path. Not expressible as a standard OpenAPI oauth2 flow, which is
+          why the derived baseline missed it.
+      - flow: authorizationCode
+        authorizationUrl: https://accounts.google.com/o/oauth2/auth
+        tokenUrl: https://oauth2.googleapis.com/token
+        scopes:
+          - https://www.googleapis.com/auth/indexing
+        source: openapi/google-indexing-urlnotifications-publish-api-openapi.yml
+        note: >-
+          Present in the spec and usable (the OAuth 2.0 Playground exercises it), but Google's docs
+          describe the service-account path.
+    transport:
+      header: Authorization
+      scheme: Bearer
+      value: Bearer <access_token>
+    challenge:
+      probed: '2026-08-13'
+      url: https://indexing.googleapis.com/v3/urlNotifications/metadata?url=https%3A%2F%2Fexample.com
+      http_status: 401
+      www_authenticate: Bearer realm="https://accounts.google.com/"
+      body_status: UNAUTHENTICATED
+      body_reason: CREDENTIALS_MISSING
+    sources:
+      - openapi/google-indexing-urlnotifications-api-openapi.yml
+      - openapi/google-indexing-urlnotifications-publish-api-openapi.yml
+      - openapi/_original/google-indexing-discovery-v3.json
+      - https://developers.google.com/search/apis/indexing-api/v3/prereqs
+authorization_server:
+  issuer: https://accounts.google.com
+  metadata:
+    oauth_authorization_server:
+      url: https://accounts.google.com/.well-known/oauth-authorization-server
+      status: 200
+      file: well-known/google-indexing-oauth-authorization-server.json
+    openid_configuration:
+      url: https://accounts.google.com/.well-known/openid-configuration
+      status: 200
+      file: well-known/google-indexing-openid-configuration.json
+  token_endpoint: https://oauth2.googleapis.com/token
+  revocation_endpoint: https://oauth2.googleapis.com/revoke
+  device_authorization_endpoint: https://oauth2.googleapis.com/device/code
+  jwks_uri: https://www.googleapis.com/oauth2/v3/certs
+  pkce: true
+  note: >-
+    Served by accounts.google.com. The API host indexing.googleapis.com 404s on both well-known paths.
+second_gate:
+  name: Search Console delegated site ownership
+  type: out-of-band authorization
+  required: true
+  enforced_at: request time, per URL
+  failure:
+    http_status: 403
+    message: Permission denied. Failed to verify the URL ownership.
+  steps:
+    - Verify the site in Google Search Console (domain or URL-prefix property).
+    - Add the service account email as a delegated owner on that property.
+  source: https://developers.google.com/search/apis/indexing-api/v3/prereqs
+  note: >-
+    A valid token with the correct scope is NOT sufficient. Authorization on this API is per-URL and is
+    resolved against Search Console property ownership, which is invisible to the OAuth layer.
+mtls:
+  endpoint: https://indexing.mtls.googleapis.com/
+  source: openapi/_original/google-indexing-discovery-v3.json
+cross_links:
+  scopes: scopes/google-indexing-scopes.yml
+  conventions: conventions/google-indexing-conventions.yml
+  errors: errors/google-indexing-error-codes.yml

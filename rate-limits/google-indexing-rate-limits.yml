@@ -4,7 +4,16 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Google Indexing
 providerId: google-indexing
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-08-13'
+generated: '2026-08-13'
+method: searched
+source: https://developers.google.com/search/apis/indexing-api/v3/quota-pricing
+docs: https://developers.google.com/search/apis/indexing-api/v3/quota-pricing
+note: >-
+  Replaces the 2026-05-04 bulk-sweep scaffold, which carried invented per-minute/per-month tiers and
+  X-RateLimit-* headers this API does not return. Every limit below is Google's own published default
+  quota, read from the Quota and pricing page on 2026-08-13. The quota is per Google Cloud project, not
+  per key, and it is a hard onboarding default: beyond it, Google requires an approval form.
 tags:
   - Crawling
   - Google
@@ -12,79 +21,98 @@ tags:
   - Search
   - SEO
   - URLs
-  - Rate Limiting
   - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Google Indexing API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
+description: >-
+  Published default quota for the Google Indexing API v3. Limits are scoped to the Google Cloud project
+  making the call. The daily publish quota resets at midnight Pacific Time and new quota can take up to
+  24 hours to become effective.
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  limit: null
+  remaining: null
+  reset: null
+  retryAfter: null
+  policy: null
+  note: >-
+    PROBED 2026-08-13: an unauthenticated GET to
+    https://indexing.googleapis.com/v3/urlNotifications/metadata returned HTTP 401 with no RateLimit-*,
+    X-RateLimit-* or Retry-After header. Google APIs do not signal remaining quota in response headers on
+    this service; quota is observed in the Google API Console, and exhaustion is signalled only by the
+    error body. This is a real agent-readiness gap, not a missing measurement.
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
+  quotaExceeded: 403
   serviceUnavailable: 503
+errorCodes:
+  - code: 429
+    reason: rateLimitExceeded
+    meaning: Too many requests have been sent within a given time span.
+  - code: 403
+    reason: dailyLimitExceeded
+    meaning: A daily quota limit for the API has been reached.
+  - code: 403
+    reason: quotaExceeded
+    meaning: The requested operation requires more resources than the quota allows.
+  - code: 403
+    reason: rateLimitExceeded
+    meaning: Too many requests have been sent within a given time span.
+  - code: 403
+    reason: userRateLimitExceeded
+    meaning: The request failed because a per-user rate limit has been reached.
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
+  - name: DefaultPublishRequestsPerDayPerProject
+    scope: per-project
+    metric: publish_requests
+    limit: 200
+    timeFrame: day
+    window: 24h
+    resets: midnight Pacific Time
+    applies:
+      - POST /v3/urlNotifications:publish
+    operations:
+      - publishUrlNotification
+    note: >-
+      Covers both URL_UPDATED and URL_DELETED notification types. New quota can take up to 24 hours to
+      become effective after the daily reset.
+  - name: DefaultMetadataRequestsPerMinutePerProject
+    scope: per-project
+    metric: read_requests
+    limit: 180
     timeFrame: minute
     applies:
-      - Google Indexing API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Google Indexing API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
+      - GET /v3/urlNotifications/metadata
+    operations:
+      - getUrlNotificationMetadata
+    note: Read-only requests to the getMetadata endpoint.
+  - name: DefaultRequestsPerMinutePerProject
+    scope: per-project
+    metric: requests
+    limit: 380
     timeFrame: minute
     applies:
-      - Google Indexing API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Google Indexing API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Google Indexing API
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+      - all endpoints
+    operations:
+      - publishUrlNotification
+      - getUrlNotificationMetadata
+batching:
+  supported: true
+  max_requests_per_batch: 100
+  source: https://developers.google.com/search/apis/indexing-api/v3/using-api#guidelines
+  note: Up to 100 requests can be combined in a single batch request.
+quota_increase:
+  available: true
+  process: approval form
+  gate: >-
+    The Indexing API can only be used to crawl pages carrying JobPosting, or BroadcastEvent embedded in a
+    VideoObject. Quota beyond the default requires Google approval and may increase or decrease based on
+    document quality.
+  source: https://developers.google.com/search/apis/indexing-api/v3/quota-pricing#request-quota
+enforcement:
+  spam_detection: true
+  note: >-
+    Submissions are subject to spam detection; attempts to exceed quota (for example by using multiple
+    accounts) may result in revoked access.
+  source: https://developers.google.com/search/apis/indexing-api/v3/using-api#guidelines
+limit_count: 3
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

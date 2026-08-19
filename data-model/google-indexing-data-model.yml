@@ -1,0 +1,113 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/_original/google-indexing-discovery-v3.json
+provider: Google Indexing
+providerId: google-indexing
+note: >-
+  Entity graph derived from the three schemas in Google's Discovery Document for the Indexing API v3
+  (revision 20260805) and cross-checked against the refined OpenAPI documents in openapi/. The model is
+  deliberately tiny: this API has no resource collection, no server-assigned identifiers and no
+  persistent objects a caller can list. The URL string is the only key.
+identifier_model:
+  primary_key: url
+  key_type: absolute HTTP(S) URL supplied by the caller
+  server_assigned_ids: false
+  id_prefixes: []
+  note: >-
+    There is no notification id. A UrlNotification is addressed only by the URL it names, and
+    getMetadata takes that URL as a query parameter. Two notifications for the same URL are
+    distinguished only by type (URL_UPDATED vs URL_DELETED) and notifyTime.
+entities:
+  - name: UrlNotification
+    description: >-
+      A single notification that a URL was updated or deleted. The request body of publish, and the
+      value carried on both metadata slots of UrlNotificationMetadata.
+    role: request-and-embedded-value
+    schema: json-schema/UrlNotification.json
+    fields:
+      - name: url
+        type: string
+        format: uri
+        required: true
+        description: The object of this notification. The URL of the page that was updated or deleted.
+      - name: type
+        type: string
+        required: true
+        enum:
+          - URL_UPDATED
+          - URL_DELETED
+        description: The type of the notification.
+      - name: notifyTime
+        type: string
+        format: date-time
+        required: false
+        description: Server-set timestamp of when the notification was received.
+  - name: UrlNotificationMetadata
+    description: >-
+      Summary of the most recent notifications Google holds for one URL. Returned by getMetadata and
+      nested inside PublishUrlNotificationResponse.
+    role: response
+    fields:
+      - name: url
+        type: string
+        format: uri
+        description: The URL the metadata is about.
+      - name: latestUpdate
+        type: UrlNotification
+        description: Latest notification of type URL_UPDATED received for this URL, if any.
+      - name: latestRemove
+        type: UrlNotification
+        description: Latest notification of type URL_DELETED received for this URL, if any.
+  - name: PublishUrlNotificationResponse
+    description: Wrapper returned by publish. Carries the post-publish metadata for the submitted URL.
+    role: response
+    fields:
+      - name: urlNotificationMetadata
+        type: UrlNotificationMetadata
+        description: The metadata state for the URL after the notification was accepted.
+relationships:
+  - from: UrlNotificationMetadata
+    to: UrlNotification
+    cardinality: has_one
+    via: latestUpdate
+    kind: embedded
+    note: Present only if a URL_UPDATED notification has been received for this URL.
+  - from: UrlNotificationMetadata
+    to: UrlNotification
+    cardinality: has_one
+    via: latestRemove
+    kind: embedded
+    note: Present only if a URL_DELETED notification has been received for this URL.
+  - from: PublishUrlNotificationResponse
+    to: UrlNotificationMetadata
+    cardinality: has_one
+    via: urlNotificationMetadata
+    kind: embedded
+  - from: UrlNotification
+    to: WebPage
+    cardinality: belongs_to
+    via: url
+    kind: external-reference
+    note: >-
+      The URL is a reference to a page outside this API. It must fall under a Search Console property
+      the calling service account is a delegated owner of, which is the API's only real ownership edge —
+      and it is enforced in Search Console, not modelled in the contract.
+operations:
+  - operationId: publishUrlNotification
+    method: POST
+    path: /v3/urlNotifications:publish
+    accepts: UrlNotification
+    returns: PublishUrlNotificationResponse
+  - operationId: getUrlNotificationMetadata
+    method: GET
+    path: /v3/urlNotifications/metadata
+    accepts: 'query parameter: url'
+    returns: UrlNotificationMetadata
+    constraint: >-
+      Can only query URLs previously seen in successful Indexing API notifications from the same
+      project.
+counts:
+  entities: 3
+  relationships: 4
+  operations: 2
+  server_assigned_ids: 0

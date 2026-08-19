@@ -1,0 +1,140 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/_original/google-indexing-discovery-v3.json, well-known/, and
+  https://developers.google.com/search/apis/indexing-api/v3/core-errors
+provider: Google Indexing
+providerId: google-indexing
+note: >-
+  Cross-cutting standards assertions for the Google Indexing API v3. Each entry records whether the API
+  conforms and what the evidence is. A `false` here is a measurement, not a criticism.
+standards:
+  - id: oauth2
+    name: OAuth 2.0 (RFC 6749)
+    conforms: true
+    evidence: >-
+      The Discovery Document declares auth.oauth2.scopes with
+      https://www.googleapis.com/auth/indexing. A live 401 returned
+      WWW-Authenticate: Bearer realm="https://accounts.google.com/".
+      accounts.google.com/.well-known/oauth-authorization-server returned HTTP 200 with issuer,
+      authorization_endpoint, token_endpoint, revocation_endpoint and device_authorization_endpoint.
+    artifacts:
+      - well-known/google-indexing-oauth-authorization-server.json
+      - scopes/google-indexing-scopes.yml
+  - id: oauth2-authorization-server-metadata
+    name: OAuth 2.0 Authorization Server Metadata (RFC 8414)
+    conforms: true
+    evidence: >-
+      https://accounts.google.com/.well-known/oauth-authorization-server returned HTTP 200 with a
+      conformant metadata document (probed 2026-08-13). Note it is served by the authorization host,
+      not by the API host — indexing.googleapis.com 404s on the same path.
+  - id: oidc
+    name: OpenID Connect Discovery 1.0
+    conforms: true
+    evidence: >-
+      https://accounts.google.com/.well-known/openid-configuration returned HTTP 200 with issuer,
+      jwks_uri, userinfo_endpoint, id_token_signing_alg_values_supported and
+      code_challenge_methods_supported (probed 2026-08-13).
+    artifacts:
+      - well-known/google-indexing-openid-configuration.json
+  - id: pkce
+    name: PKCE (RFC 7636)
+    conforms: true
+    evidence: >-
+      code_challenge_methods_supported is present in the OpenID configuration served by
+      accounts.google.com.
+  - id: jwt-bearer
+    name: JWT Bearer assertion grant (RFC 7523)
+    conforms: true
+    evidence: >-
+      The documented onboarding path is a Google Cloud service account with a JSON private key, which
+      exchanges a signed JWT assertion for an access token at
+      https://oauth2.googleapis.com/token. See
+      https://developers.google.com/search/apis/indexing-api/v3/prereqs
+  - id: rfc9457
+    name: Problem Details for HTTP APIs (RFC 9457)
+    conforms: false
+    evidence: >-
+      Errors are returned as application/json using the google.rpc.Status envelope
+      ({error:{code,message,status,details[]}}), not application/problem+json. Captured live on
+      2026-08-13.
+    artifacts:
+      - errors/google-indexing-error-codes.yml
+  - id: rfc8594
+    name: Sunset HTTP header (RFC 8594)
+    conforms: false
+    evidence: No Sunset or Deprecation header observed on a live response; no deprecation policy published.
+    artifacts:
+      - lifecycle/google-indexing-lifecycle.yml
+  - id: rfc9116
+    name: security.txt (RFC 9116)
+    conforms: true
+    evidence: >-
+      https://www.google.com/.well-known/security.txt returned HTTP 200 with Contact, Encryption,
+      Acknowledgments, Policy, Hiring and Expires fields (probed 2026-08-13). Served at the
+      organization host, not the API host.
+    artifacts:
+      - well-known/google-indexing-security.txt
+  - id: ratelimit-headers
+    name: RateLimit header fields for HTTP (draft)
+    conforms: false
+    evidence: >-
+      No RateLimit-*, X-RateLimit-* or Retry-After header on a live response, probed 2026-08-13. Quota
+      state is only observable in the Google API Console.
+  - id: idempotency-key
+    name: Idempotency-Key header (draft)
+    conforms: false
+    evidence: No idempotency key mechanism is documented or present in the Discovery Document.
+  - id: pagination
+    name: Cursor or page-token pagination
+    conforms: false
+    evidence: Neither operation returns a collection; no pageToken, cursor or limit parameter exists.
+  - id: json-schema
+    name: JSON Schema
+    conforms: partial
+    evidence: >-
+      Google publishes a Discovery Document (kind discovery#restDescription) rather than JSON Schema.
+      API Evangelist derived json-schema/UrlNotification.json from it; that is our artifact, not
+      Google's.
+  - id: openapi
+    name: OpenAPI
+    conforms: false
+    evidence: >-
+      Google does not publish an OpenAPI document for the Indexing API. Probed
+      https://indexing.googleapis.com/openapi.json (404). The authoritative machine-readable contract is
+      the Google API Discovery Document at
+      https://indexing.googleapis.com/$discovery/rest?version=v3 (HTTP 200, revision 20260805), captured
+      verbatim at openapi/_original/google-indexing-discovery-v3.json. The OpenAPI documents in
+      openapi/ are API Evangelist translations of that contract.
+  - id: mcp
+    name: Model Context Protocol
+    conforms: false
+    evidence: Google publishes no MCP server for the Indexing API. See mcp/google-indexing-mcp.yml.
+  - id: a2a
+    name: A2A Agent Card
+    conforms: false
+    evidence: >-
+      /.well-known/agent-card.json and /.well-known/agent.json returned 404 on indexing.googleapis.com,
+      developers.google.com, www.google.com and googleapis.com (probed 2026-08-13).
+  - id: grpc
+    name: gRPC / Protobuf
+    conforms: unpublished
+    evidence: >-
+      The live error body names a backend gRPC service (google.indexing.v3.UrlService), but no .proto is
+      published. googleapis/googleapis has no google/indexing directory (HTTP 404 on the GitHub contents
+      API, probed 2026-08-13).
+compliance:
+  certifications_published: false
+  note: >-
+    No certification or attestation is published that names the Indexing API. Google Cloud's
+    services-in-scope compliance page was fetched (HTTP 200) and does not list the Indexing API, so no
+    Compliance or TrustCenter pointer is wired for this provider.
+  evidence:
+    - url: https://cloud.google.com/security/compliance/services-in-scope
+      status: 200
+      result: no match for "Indexing API"
+counts:
+  asserted: 16
+  conforms: 6
+  does_not_conform: 8
+  partial_or_unpublished: 2

@@ -1,0 +1,120 @@
+generated: '2026-08-13'
+method: probed
+source: live HTTP probes of the API host, the docs host, and the OAuth host named in the OpenAPI securityScheme
+note: >-
+  The API host itself (indexing.googleapis.com) serves nothing under /.well-known/ — every path 404s with
+  a Google HTML error page. The real, served well-known documents for this API's identity surface sit on
+  accounts.google.com, which is the host the OpenAPI securityScheme names as authorizationUrl, and on
+  www.google.com for the org-wide security.txt. Both are Google-controlled hosts and both returned real
+  documents, so a WellKnown and a SecurityTxt pointer are wired. Nothing was found on the API host.
+hosts:
+  - host: indexing.googleapis.com
+    role: api-base
+    hits: 0
+  - host: developers.google.com
+    role: docs
+    hits: 0
+  - host: accounts.google.com
+    role: oauth-authorization-server
+    hits: 2
+  - host: www.google.com
+    role: organization
+    hits: 1
+probes:
+  - host: indexing.googleapis.com
+    path: /.well-known/security.txt
+    url: https://indexing.googleapis.com/.well-known/security.txt
+    status: 404
+    file: null
+  - host: indexing.googleapis.com
+    path: /.well-known/openid-configuration
+    url: https://indexing.googleapis.com/.well-known/openid-configuration
+    status: 404
+    file: null
+  - host: indexing.googleapis.com
+    path: /.well-known/oauth-authorization-server
+    url: https://indexing.googleapis.com/.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - host: indexing.googleapis.com
+    path: /.well-known/api-catalog
+    url: https://indexing.googleapis.com/.well-known/api-catalog
+    status: 404
+    file: null
+  - host: indexing.googleapis.com
+    path: /.well-known/ai-plugin.json
+    url: https://indexing.googleapis.com/.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - host: indexing.googleapis.com
+    path: /.well-known/agent-card.json
+    url: https://indexing.googleapis.com/.well-known/agent-card.json
+    status: 404
+    file: null
+  - host: indexing.googleapis.com
+    path: /.well-known/agent.json
+    url: https://indexing.googleapis.com/.well-known/agent.json
+    status: 404
+    file: null
+  - host: developers.google.com
+    path: /.well-known/security.txt
+    url: https://developers.google.com/.well-known/security.txt
+    status: 404
+    file: null
+  - host: developers.google.com
+    path: /llms.txt
+    url: https://developers.google.com/llms.txt
+    status: 404
+    file: null
+  - host: developers.google.com
+    path: /.well-known/agent-card.json
+    url: https://developers.google.com/.well-known/agent-card.json
+    status: 404
+    file: null
+  - host: developers.google.com
+    path: /.well-known/agent.json
+    url: https://developers.google.com/.well-known/agent.json
+    status: 404
+    file: null
+  - host: accounts.google.com
+    path: /.well-known/openid-configuration
+    url: https://accounts.google.com/.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    file: well-known/google-indexing-openid-configuration.json
+  - host: accounts.google.com
+    path: /.well-known/oauth-authorization-server
+    url: https://accounts.google.com/.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    file: well-known/google-indexing-oauth-authorization-server.json
+  - host: www.google.com
+    path: /.well-known/security.txt
+    url: https://www.google.com/.well-known/security.txt
+    status: 200
+    content_type: text/plain
+    file: well-known/google-indexing-security.txt
+  - host: www.google.com
+    path: /.well-known/api-catalog
+    url: https://www.google.com/.well-known/api-catalog
+    status: 404
+    file: null
+  - host: www.google.com
+    path: /.well-known/agent-card.json
+    url: https://www.google.com/.well-known/agent-card.json
+    status: 404
+    file: null
+  - host: googleapis.com
+    path: /.well-known/api-catalog
+    url: https://googleapis.com/.well-known/api-catalog
+    status: 404
+    file: null
+summary:
+  probed: 17
+  hits: 3
+  security_txt: true
+  openid_configuration: true
+  oauth_authorization_server: true
+  api_catalog: false
+  ai_plugin: false
+  agent_card: false

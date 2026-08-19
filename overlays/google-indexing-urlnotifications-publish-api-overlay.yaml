@@ -1,0 +1,193 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — Google Indexing urlNotifications:publish API
+  version: 1.0.0
+extends: ../openapi/google-indexing-urlnotifications-publish-api-openapi.yml
+x-provenance:
+  generated: '2026-08-13'
+  method: generated
+  source: >-
+    https://developers.google.com/search/apis/indexing-api/v3/quota-pricing,
+    https://developers.google.com/search/apis/indexing-api/v3/using-api,
+    https://developers.google.com/search/apis/indexing-api/v3/core-errors,
+    openapi/_original/google-indexing-discovery-v3.json
+  note: >-
+    Non-destructive overlay over the publish operation. Every value is from Google's published
+    documentation or the Discovery Document revision 20260805.
+actions:
+  - target: $.info
+    description: Record the authoritative upstream contract and the eligibility gate.
+    update:
+      x-contract-source: https://indexing.googleapis.com/$discovery/rest?version=v3
+      x-contract-format: Google API Discovery Document (discovery#restDescription)
+      x-contract-revision: '20260805'
+      x-contract-captured: '2026-08-13'
+      x-documentation: https://developers.google.com/search/apis/indexing-api/
+      termsOfService: https://developers.google.com/terms
+      x-eligibility: >-
+        Google restricts this API to pages carrying JobPosting structured data, or BroadcastEvent
+        embedded in a VideoObject. Submissions are subject to spam detection and attempts to exceed
+        quota may result in revoked access.
+
+  - target: $.servers
+    description: Add the mTLS endpoint Google declares in the Discovery Document.
+    update:
+      - url: https://indexing.mtls.googleapis.com/v3
+        description: Mutual-TLS endpoint declared as mtlsRootUrl in the Discovery Document.
+
+  - target: $.paths['/urlNotifications:publish'].post
+    description: >-
+      Record the published quota, the required Content-Type, batching, the absence of an idempotency
+      mechanism, and the write consequence.
+    update:
+      x-rate-limit:
+        scope: per-project
+        limit: 200
+        window: day
+        resets: midnight Pacific Time
+        name: DefaultPublishRequestsPerDayPerProject
+        covers:
+          - URL_UPDATED
+          - URL_DELETED
+        source: https://developers.google.com/search/apis/indexing-api/v3/quota-pricing
+      x-rate-limit-headers: none
+      x-required-request-header: 'Content-Type: application/json (mandatory per Google guidelines)'
+      x-batching:
+        supported: true
+        max_requests: 100
+        source: https://developers.google.com/search/apis/indexing-api/v3/using-api#guidelines
+      x-idempotency:
+        supported: false
+        note: >-
+          No idempotency key. Re-submitting the same {url, type} is a supported and safe flow, but each
+          attempt consumes daily quota — a blind retry loop is expensive, not dangerous.
+      x-consequence: write
+      x-precondition: >-
+        The calling service account must be a delegated owner of a verified Search Console property
+        covering the submitted URL.
+      x-agentic-access:
+        action-class: write
+        consequence: external-visible
+        scope: https://www.googleapis.com/auth/indexing
+        escalation: required
+        note: >-
+          This is a production write against Google Search. There is no sandbox and no test mode.
+
+  - target: $.paths['/urlNotifications:publish'].post.responses
+    description: Attach the real error envelope and the documented API-specific failure messages.
+    update:
+      '400':
+        description: >-
+          Bad request. Documented messages: "Missing attribute. 'url' attribute is required.";
+          "Invalid attribute. 'url' is not in standard URL format"; "Unknown type. 'type' attribute is
+          required and must be 'URL_REMOVED' or 'URL_UPDATED'."; "Invalid value at
+          'url_notification.type' (TYPE_ENUM)". The URL is not crawled.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoogleRpcStatus'
+      '401':
+        description: >-
+          Missing or invalid credentials. Returns WWW-Authenticate: Bearer
+          realm="https://accounts.google.com/".
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoogleRpcStatus'
+      '403':
+        description: >-
+          Forbidden. Most commonly "Permission denied. Failed to verify the URL ownership." — the
+          service account is not a delegated owner of a verified Search Console property for this URL.
+          Also carries quota exhaustion: dailyLimitExceeded, quotaExceeded, userRateLimitExceeded.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoogleRpcStatus'
+      '429':
+        description: Rate limit exceeded (reason rateLimitExceeded). No Retry-After header is returned.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoogleRpcStatus'
+
+  - target: $.components.schemas
+    description: Add the google.rpc.Status error envelope the API actually returns.
+    update:
+      GoogleRpcStatus:
+        type: object
+        description: >-
+          Standard Google API error envelope. Captured verbatim from a live response on 2026-08-13.
+          This API does not use RFC 9457 application/problem+json.
+        properties:
+          error:
+            type: object
+            properties:
+              code:
+                type: integer
+              message:
+                type: string
+              status:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                    reason:
+                      type: string
+                    domain:
+                      type: string
+                    metadata:
+                      type: object
+
+  - target: $.components.schemas.UrlNotification.properties.type
+    description: >-
+      Correct the enum against the Discovery Document. The base spec omits the sentinel value Google
+      actually declares, and the docs error text ("must be 'URL_REMOVED' or 'URL_UPDATED'") disagrees
+      with the contract — the accepted value is URL_DELETED.
+    update:
+      enum:
+        - URL_NOTIFICATION_TYPE_UNSPECIFIED
+        - URL_UPDATED
+        - URL_DELETED
+      x-enum-descriptions:
+        URL_NOTIFICATION_TYPE_UNSPECIFIED: Unspecified.
+        URL_UPDATED: The given URL (Web document) has been updated.
+        URL_DELETED: The given URL (Web document) has been deleted.
+      x-docs-inconsistency: >-
+        https://developers.google.com/search/apis/indexing-api/v3/core-errors states the value must be
+        'URL_REMOVED' or 'URL_UPDATED'. The Discovery Document (revision 20260805) declares URL_DELETED.
+        UrlNotificationMetadata.latestRemove is likewise documented as "Latest notification received
+        with type URL_REMOVED". Send URL_DELETED.
+
+  - target: $.components.schemas.UrlNotification.properties.notifyTime
+    description: >-
+      Mark notifyTime as read-only. The Discovery Document states callers should not specify it and the
+      field is ignored at request time — the base spec presents it as an ordinary writable property.
+    update:
+      readOnly: true
+      x-format: google-datetime
+      description: >-
+        Creation timestamp for this notification. Callers should not specify it; the field is ignored at
+        request time.
+
+  - target: $.components.schemas.UrlNotification.properties.url
+    description: Carry Google's own constraint language for the url field.
+    update:
+      description: >-
+        The object of this notification. The URL must be owned by the publisher of this notification
+        and, for URL_UPDATED notifications, it must be crawlable by Google.
+
+  - target: $.components.securitySchemes.OAuth2.flows
+    description: Add the documented service-account JWT-bearer flow.
+    update:
+      clientCredentials:
+        tokenUrl: https://oauth2.googleapis.com/token
+        x-grant-type: urn:ietf:params:oauth:grant-type:jwt-bearer
+        x-note: >-
+          Google's documented path is a service account signing a JWT assertion and exchanging it at the
+          token endpoint. See https://developers.google.com/search/apis/indexing-api/v3/prereqs
+        scopes:
+          https://www.googleapis.com/auth/indexing: Submit data to Google for indexing

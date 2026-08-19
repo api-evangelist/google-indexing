@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Google Indexing urlNotifications urlNotifications:publish API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+      "accessTokenUrl": "https://oauth2.googleapis.com/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "urlNotifications:publish",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Google Indexing Publish URL Notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://indexing.googleapis.com/v3/urlNotifications:publish",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Notifies Google that a URL has been updated or removed. Use URL_UPDATED to request crawling, or URL_DELETED to indicate a page has been removed."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

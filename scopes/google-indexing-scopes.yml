@@ -1,17 +1,45 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/openapi.yml
+generated: '2026-08-13'
+method: searched
+source: https://indexing.googleapis.com/$discovery/rest?version=v3
+docs: https://developers.google.com/search/apis/indexing-api/v3/prereqs
+note: >-
+  Upgraded from derived to searched on 2026-08-13. The scope string and its description were read from
+  Google's live Discovery Document (revision 20260805), which is the authoritative publisher of this
+  API's auth.oauth2.scopes block — Google's own description is "Submit data to Google for indexing",
+  which the derived baseline had paraphrased. There is exactly ONE scope, it is coarse, and it covers
+  both operations: there is no read-only scope for getMetadata.
 schemes:
-- name: OAuth2
-  source: openapi/openapi.yml
-  flows:
-  - flow: authorizationCode
-    authorizationUrl: https://accounts.google.com/o/oauth2/auth
-    tokenUrl: https://oauth2.googleapis.com/token
+  - name: OAuth2
+    source: openapi/_original/google-indexing-discovery-v3.json
+    flows:
+      - flow: jwt-bearer
+        tokenUrl: https://oauth2.googleapis.com/token
+      - flow: authorizationCode
+        authorizationUrl: https://accounts.google.com/o/oauth2/auth
+        tokenUrl: https://oauth2.googleapis.com/token
 scopes:
-- scope: https://www.googleapis.com/auth/indexing
-  description: Submit URLs to Google indexing
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/openapi.yml
+  - scope: https://www.googleapis.com/auth/indexing
+    description: Submit data to Google for indexing
+    sensitivity: restricted
+    grants:
+      - publishUrlNotification
+      - getUrlNotificationMetadata
+    flows:
+      - jwt-bearer
+      - authorizationCode
+    sources:
+      - openapi/_original/google-indexing-discovery-v3.json
+      - openapi/google-indexing-urlnotifications-publish-api-openapi.yml
+      - openapi/google-indexing-urlnotifications-api-openapi.yml
+granularity:
+  scope_count: 1
+  read_only_scope: false
+  least_privilege_possible: false
+  note: >-
+    A single scope covers both the read operation and the production write. An agent that only needs to
+    look up notification metadata must be granted the same scope that lets it change what Google
+    crawls. This is a real least-privilege gap in the provider's design, not a gap in this artifact.
+authorization_beyond_scope:
+  required: true
+  mechanism: Search Console delegated site ownership, enforced per URL
+  artifact: authentication/google-indexing-authentication.yml

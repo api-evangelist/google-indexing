@@ -1,0 +1,61 @@
+generated: '2026-08-13'
+method: derived
+status: candidate
+source: openapi/google-indexing-urlnotifications-api-openapi.yml, openapi/google-indexing-urlnotifications-publish-api-openapi.yml
+provider: Google Indexing
+providerId: google-indexing
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: oauth
+  verified: searched
+note: >-
+  GOOGLE PUBLISHES NO MCP SERVER FOR THE INDEXING API. Searched 2026-08-13: Google's own MCP work covers
+  the Developer Knowledge API (developers.google.com/knowledge/reference/mcp) and Google Cloud
+  (docs.cloud.google.com/mcp/overview); neither exposes the Indexing API. Third-party wrappers exist —
+  an auto-generated one is listed on glama.ai and there are several community Search Console servers —
+  but none is first-party and none is recorded as this provider's surface. The tools below are a
+  CANDIDATE derivation from the two real OpenAPI operations, published so an integrator can see what an
+  MCP surface would look like. No `MCPServer` pointer is wired into apis.yml, because that pointer
+  asserts the provider ships a server and Google does not.
+server:
+  name: google-indexing
+  transport: null
+  url: null
+  published: false
+tools:
+  - name: publish_url_notification
+    description: >-
+      Notify Google that a URL has been updated or deleted. Use URL_UPDATED to request a crawl, or
+      URL_DELETED to signal removal. Consumes one of 200 daily publish requests.
+    source_operation: openapi/google-indexing-urlnotifications-publish-api-openapi.yml#publishUrlNotification
+    method: POST
+    path: /v3/urlNotifications:publish
+    consequence: write
+    input_from_spec: components.schemas.UrlNotification (url, type)
+  - name: get_url_notification_metadata
+    description: >-
+      Get the latest notification timestamps and types Google holds for a URL. Read-only. Only works for
+      URLs previously submitted successfully by the same project.
+    source_operation: openapi/google-indexing-urlnotifications-api-openapi.yml#getUrlNotificationMetadata
+    method: GET
+    path: /v3/urlNotifications/metadata
+    consequence: read
+    input_from_spec: 'query parameter: url (string, uri, required)'
+auth_profile:
+  type: oauth2
+  scope: https://www.googleapis.com/auth/indexing
+  principal: Google Cloud service account with Search Console delegated-owner status
+  artifact: authentication/google-indexing-authentication.yml
+agent_notes:
+  - Every publish call is a production write against Google Search. There is no sandbox.
+  - Daily publish quota is 200 per Google Cloud project and there is no header telling an agent how much is left.
+  - >-
+    Eligibility is enforced: Google states the API may only be used for pages with JobPosting or
+    BroadcastEvent-in-VideoObject markup, and submissions are subject to spam detection.
+searched:
+  - query: official Google Indexing API MCP server model context protocol
+    date: '2026-08-13'
+    result: no first-party server found

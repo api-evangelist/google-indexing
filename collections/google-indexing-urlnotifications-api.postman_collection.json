@@ -1,0 +1,235 @@
+{
+  "item": [
+    {
+      "id": "a34ba23f-77e8-4fb8-b820-d4ed3a8db05c",
+      "name": "urlNotifications",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "61bc9349-4b03-4b61-a6a0-6d6c38501342",
+          "name": "Google Indexing Get URL Notification Metadata",
+          "request": {
+            "name": "Google Indexing Get URL Notification Metadata",
+            "description": {
+              "content": "Gets metadata about a URL, including the latest notification timestamps and type.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "urlNotifications",
+                "metadata"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "url",
+                  "value": "<uri>",
+                  "description": "(Required) The URL to get notification metadata for."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bc74de0b-9977-4680-88a0-7de33f1863dc",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "urlNotifications",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<uri>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"url\": \"https://mSJYvjLXmpVlGjmpIW.kzZFeK8TxMKEbWLl0LJ1iFDVmFquJulxh3,KM,u3cK6XKikbfpsrsr,uK\",\n  \"latestUpdate\": {\n    \"url\": \"https://buJAKHsYhiwhMPJzYndZgwyLpd.wonRl.vIBgClOX1AZDpZcX8lTKLhcBSRkD5cc+.YScpsjdCC8BHi,\",\n    \"type\": \"URL_UPDATED\",\n    \"notifyTime\": \"2022-10-10T19:38:31.045Z\"\n  },\n  \"latestRemove\": {\n    \"url\": \"http://YoqZZtMxLOGP.cjiwuw,ldRkLVtDhdTEBGOJUz9QgeRK\",\n    \"type\": \"URL_DELETED\",\n    \"notifyTime\": \"2001-05-23T22:41:22.073Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "239cf271-fbf2-4e38-a8c0-9ee870a6a28f",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "urlNotifications",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<uri>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "12b6e7e6-3673-4d16-9e46-3774a6571bce",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "urlNotifications",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<uri>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://indexing.googleapis.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "https://www.googleapis.com/auth/indexing"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://oauth2.googleapis.com/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://accounts.google.com/o/oauth2/auth"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "940b001e-e037-46ab-9bfc-775749aeb22b",
+    "name": "Google Indexing urlNotifications API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Google Indexing API allows site owners to notify Google when pages are added or removed. It enables direct notification to Google to crawl pages, leading to fresher content in search results. It is primarily intended for websites with job postings or livestream structured data.\n\nContact Support:\n Name: Google",
+      "type": "text/plain"
+    }
+  }
+}

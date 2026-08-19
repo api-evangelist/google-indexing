@@ -1,0 +1,63 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.google.com/search/apis/indexing-api/v3/libraries
+provider: Google Indexing
+providerId: google-indexing
+note: >-
+  The Indexing API has NO test mode and NO sandbox environment. There are no test keys, no magic test
+  URLs, and no fixture values — every call goes to production Google Search and consumes real daily
+  quota. What Google does publish is an interactive, authenticated console (the APIs Explorer) and a
+  token-minting playground. Both are recorded below because they are the only "try it" surfaces that
+  exist. No test value is invented here because Google publishes none.
+test_mode:
+  available: false
+  key_prefixes: null
+  modes: []
+  note: >-
+    There is no test-vs-live distinction. Submitting a URL_UPDATED notification is a production request
+    against Google Search and counts against the 200/day publish quota. The only way to exercise the API
+    without side effects is getMetadata, which is read-only — and it can only query URLs previously seen
+    in a successful notification from the same project.
+consoles:
+  - name: Google APIs Explorer (Indexing API v3)
+    type: interactive-console
+    url: https://developers.google.com/apis-explorer/#p/indexing/v3/
+    status: 200
+    probed: '2026-08-13'
+    auth: Google sign-in, OAuth consent for https://www.googleapis.com/auth/indexing
+    executes_real_requests: true
+    note: >-
+      Browser console that builds and sends real, authorized requests to the two Indexing API
+      operations. Linked from Google's own Install Client Libraries page. Requests are live.
+  - name: OAuth 2.0 Playground
+    type: token-minting-console
+    url: https://developers.google.com/oauthplayground/
+    status: 200
+    probed: '2026-08-13'
+    auth: Google sign-in
+    executes_real_requests: true
+    note: >-
+      Exchanges an authorization code for an access token against any Google scope, including
+      https://www.googleapis.com/auth/indexing. Useful for getting a bearer token by hand before calling
+      the API; it is not a sandbox for the API itself.
+test_data:
+  test_urls: []
+  test_accounts: []
+  fixtures: []
+  triggers: []
+  time_simulation: false
+  note: >-
+    None published. The documentation's worked example uses a real public URL
+    (https://careers.google.com/jobs/google/technical-writer) purely as an illustration of body shape;
+    it is not a reserved test value and is not recorded here as one.
+prerequisites_before_any_call:
+  steps:
+    - Create a Google Cloud project and enable the Indexing API.
+    - Create a service account and download its JSON private key.
+    - Verify the site in Search Console.
+    - Add the service account email as a delegated site owner on that property.
+  source: https://developers.google.com/search/apis/indexing-api/v3/prereqs
+  note: >-
+    This four-step gate is the practical barrier to trying the API. There is no way to make a successful
+    call without completing all four — an unauthenticated call returns 401, and an authenticated call
+    against an unverified property returns 403 "Failed to verify the URL ownership."

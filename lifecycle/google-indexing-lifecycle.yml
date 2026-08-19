@@ -1,0 +1,85 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.google.com/search/apis/indexing-api/
+provider: Google Indexing
+providerId: google-indexing
+versioning:
+  scheme: path-major-version
+  pattern: https://indexing.googleapis.com/v{major}
+  current: v3
+  current_since: unknown
+  contract_revision: '20260805'
+  contract_revision_source: https://indexing.googleapis.com/$discovery/rest?version=v3
+  note: >-
+    The service version is pinned in the URL path (v3). Google additionally stamps the Discovery Document
+    with a `revision` date (20260805 when read on 2026-08-13), which is the only machine-readable change
+    marker this API publishes. Client libraries pin to that revision — see packages/.
+  previous_versions: []
+  media_type_versioning: false
+  header_versioning: false
+deprecation:
+  policy_published: false
+  policy_url: null
+  policy_scope: >-
+    VERIFIED ABSENT 2026-08-13. No deprecation or sunset policy is published for the Indexing API. The
+    Google APIs Terms of Service (https://developers.google.com/terms, HTTP 200, last modified
+    2021-11-09) was fetched and searched: it contains no deprecation clause at all. The Google Cloud
+    deprecation policy (https://cloud.google.com/terms/deprecation) exists but covers Google Cloud
+    Platform services; the Indexing API is a Search Central API published under developers.google.com
+    and is not enumerated there, so it is not claimed here. No Deprecation pointer is wired in apis.yml
+    for this reason.
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: >-
+    PROBED 2026-08-13: no Sunset or Deprecation response header was observed on a live call to
+    https://indexing.googleapis.com/v3/urlNotifications/metadata. No operation in the Discovery Document
+    or in the refined OpenAPI carries `deprecated: true`.
+  deprecated_operations: []
+status_page:
+  published: true
+  url: https://status.search.google.com/
+  scope: Google Search, including Search Central APIs
+  machine_readable: true
+  feeds:
+    - url: https://status.search.google.com/incidents.json
+      format: json
+      status: 200
+      probed: '2026-08-13'
+  note: >-
+    Google Search publishes a dedicated status dashboard with a machine-readable incidents feed. It is a
+    Search-wide dashboard; the Indexing API is not broken out as its own component.
+sla:
+  published: false
+  note: >-
+    No SLA is published for the Indexing API. The service is free of charge (see plans/) and is governed
+    by the Google APIs Terms of Service.
+support:
+  channel: Google Search Central Community
+  url: https://support.google.com/webmasters/community
+  issue_tracker: null
+roadmap:
+  published: false
+  note: No public roadmap is published for the Indexing API.
+changelog:
+  published: true
+  url: https://developers.google.com/search/updates
+  feed: https://developers.google.com/search/updates/search_docs_updates.rss
+  scope: All Google Search Central documentation, not Indexing-API-specific.
+  artifact: changelog/google-indexing-changelog.yml
+stability:
+  state: stable
+  eligibility_gated: true
+  note: >-
+    v3 has been the current version throughout the observed window. The surface is two operations and has
+    not changed since at least discovery revision 20230927 (2023). Access is gated on content eligibility
+    (JobPosting / BroadcastEvent) rather than on price.
+evidence:
+  - url: https://indexing.googleapis.com/$discovery/rest?version=v3
+    status: 200
+  - url: https://status.search.google.com/incidents.json
+    status: 200
+  - url: https://developers.google.com/search/updates
+    status: 200
+  - url: https://developers.google.com/search/apis/indexing-api/v3/quota-pricing
+    status: 200

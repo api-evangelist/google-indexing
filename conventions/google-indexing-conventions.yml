@@ -1,0 +1,124 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.google.com/search/apis/indexing-api/v3/using-api
+provider: Google Indexing
+providerId: google-indexing
+note: >-
+  Cross-cutting runtime semantics for the Google Indexing API v3, read from Google's own using-api,
+  prereqs and quota pages, and cross-checked against the Discovery Document at
+  openapi/_original/google-indexing-discovery-v3.json and a live unauthenticated probe on 2026-08-13.
+auth:
+  style: oauth2-service-account
+  scheme: Bearer
+  header: 'Authorization: Bearer <access_token>'
+  scope: https://www.googleapis.com/auth/indexing
+  principal: Google Cloud service account
+  additional_gate: >-
+    The service account must be added as a delegated site owner on a Search Console property that the
+    submitted URL falls under. Ownership verification, not the token, is what a 403 usually means here.
+  docs: https://developers.google.com/search/apis/indexing-api/v3/prereqs
+  artifact: authentication/google-indexing-authentication.yml
+  mtls_endpoint: https://indexing.mtls.googleapis.com/
+  mtls_source: openapi/_original/google-indexing-discovery-v3.json
+content_type:
+  request: application/json
+  response: application/json
+  required: true
+  note: >-
+    Google states all calls to /v3/urlNotifications:publish MUST send Content-Type: application/json.
+idempotency:
+  supported: false
+  header: null
+  key_scope: null
+  retention: null
+  note: >-
+    No idempotency key mechanism exists. There is no Idempotency-Key header and no request-id echo. The
+    publish operation is, however, naturally repeatable: re-submitting the same {url, type} pair is a
+    supported flow ("If the page's contents change, submit another update notification"), and each
+    submission consumes daily quota. Retrying a failed publish is therefore safe for correctness but not
+    free — a retry loop burns the 200/day publish quota. No `Idempotency` pointer is wired in apis.yml
+    because the provider ships no idempotency mechanism.
+pagination:
+  supported: false
+  note: >-
+    Neither operation returns a collection. getMetadata returns a single UrlNotificationMetadata for one
+    URL; publish returns a single object. There is no pageToken, cursor or limit parameter anywhere in
+    the Discovery Document.
+filtering_and_expansion:
+  sparse_fields:
+    supported: true
+    parameter: fields
+    description: Standard Google APIs selector for a subset of response fields.
+  partial_response: true
+  metadata_fields: false
+  source: openapi/_original/google-indexing-discovery-v3.json
+system_parameters:
+  source: openapi/_original/google-indexing-discovery-v3.json
+  note: Google's standard cross-API query parameters, present on every operation.
+  parameters:
+    - name: $.xgafv
+      description: V1 or V2 error format.
+    - name: access_token
+      description: OAuth access token as a query parameter.
+    - name: alt
+      description: Response data format (json, media, proto).
+    - name: callback
+      description: JSONP callback.
+    - name: fields
+      description: Selector specifying a subset of fields to include in the response.
+    - name: key
+      description: API key. Not usable on this API — OAuth is required.
+    - name: oauth_token
+      description: OAuth 2.0 token for the current user.
+    - name: prettyPrint
+      description: Returns response with indentations and line breaks.
+    - name: quotaUser
+      description: Opaque string to enforce per-user quota limits.
+    - name: uploadType
+      description: Upload protocol for media (multipart, media, resumable).
+    - name: upload_protocol
+      description: Upload protocol for media (raw, multipart, resumable).
+request_tracing:
+  request_id_header: null
+  correlation_header: null
+  note: >-
+    No request-id or correlation header is documented, and none was observed on the live 401 probe. The
+    error body's details[].metadata does name the backend method
+    (google.indexing.v3.UrlService.GetUrlNotificationMetadata) and service, which is the only trace
+    handle the API surfaces.
+batching:
+  supported: true
+  style: google-api-batch
+  endpoint_path: batch
+  max_requests: 100
+  source: https://developers.google.com/search/apis/indexing-api/v3/using-api#guidelines
+versioning:
+  style: path
+  current: v3
+  artifact: lifecycle/google-indexing-lifecycle.yml
+error_envelope:
+  format: google.rpc.Status
+  rfc9457: false
+  content_type: application/json
+  artifact: errors/google-indexing-error-codes.yml
+rate_limit_signalling:
+  response_headers: none
+  status_on_exhaustion:
+    - 403 with reason dailyLimitExceeded / quotaExceeded
+    - 429 with reason rateLimitExceeded
+  retry_after: false
+  artifact: rate-limits/google-indexing-rate-limits.yml
+  note: >-
+    PROBED 2026-08-13: no RateLimit-*, X-RateLimit-* or Retry-After header on a live response. Remaining
+    quota is only visible in the Google API Console.
+conditional_requests:
+  etag: false
+  if_none_match: >-
+    The global error registry documents a 304 notModified for If-None-Match, but neither Indexing API
+    operation documents ETag support.
+cross_links:
+  errors: errors/google-indexing-error-codes.yml
+  lifecycle: lifecycle/google-indexing-lifecycle.yml
+  authentication: authentication/google-indexing-authentication.yml
+  scopes: scopes/google-indexing-scopes.yml
+  rate_limits: rate-limits/google-indexing-rate-limits.yml

@@ -1,0 +1,110 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.google.com/search/updates
+provider: Google Indexing
+providerId: google-indexing
+scheme:
+  api_version: path-major (v3)
+  contract_marker: Google Discovery Document `revision` field, YYYYMMDD
+  current_revision: '20260805'
+  revision_source: https://indexing.googleapis.com/$discovery/rest?version=v3
+  probed: '2026-08-13'
+changelogs:
+  - name: Google Search Central documentation updates
+    url: https://developers.google.com/search/updates
+    feed: https://developers.google.com/search/updates/search_docs_updates.rss
+    status: 200
+    scope: All Search Central documentation, including the Indexing API. Not Indexing-API-specific.
+    dated: true
+  - name: '@googleapis/indexing release notes'
+    url: https://github.com/googleapis/google-api-nodejs-client/blob/main/src/apis/indexing/CHANGELOG.md
+    status: 200
+    scope: Generated Node.js client for the Indexing API. Tracks regeneration, not the API surface.
+    dated: true
+  - name: google-apis-indexing_v3 release history
+    url: https://github.com/googleapis/google-api-ruby-client/blob/main/generated/google-apis-indexing_v3/CHANGELOG.md
+    status: 200
+    scope: Generated Ruby client for the Indexing API; names the discovery revision it was built from.
+    dated: true
+note: >-
+  Google publishes no Indexing-API-specific changelog. The two dated sources that do carry
+  Indexing-API-relevant change are the Search Central documentation updates feed and the generated client
+  library release notes. The single most useful finding is that the last entry naming an actual
+  Indexing API contract change is the Ruby client's v0.14.0 (2023-10-08), "Regenerated from discovery
+  document revision 20230927" — every release since is a generator-version bump, not an API change. The
+  API surface has been two operations throughout.
+entries:
+  - date: '2026-08-05'
+    source: discovery
+    version: revision 20260805
+    breaking: false
+    additions: []
+    highlights:
+      - Current Discovery Document revision as read on 2026-08-13. Surface unchanged at two operations.
+  - date: '2026-08-03'
+    source: client-library
+    version: '@googleapis/indexing 7.0.0'
+    breaking: true
+    additions: []
+    highlights:
+      - Node.js client major release from a generator run. Flagged breaking by the release tooling.
+  - date: '2026-06-21'
+    source: client-library
+    version: google-apis-indexing_v3 0.19.0
+    breaking: false
+    additions: []
+    highlights:
+      - Ruby client regenerated using generator version 0.19.0. No discovery revision change named.
+  - date: '2025-12-05'
+    source: client-library
+    version: '@googleapis/indexing 6.0.1'
+    breaking: false
+    additions: []
+    highlights:
+      - Node.js client patch, "update the API".
+  - date: '2025-10-15'
+    source: client-library
+    version: '@googleapis/indexing 6.0.0'
+    breaking: true
+    additions: []
+    highlights:
+      - Node.js client major release from a generator run.
+  - date: '2025-05-04'
+    source: client-library
+    version: google-apis-indexing_v3 0.18.0
+    breaking: false
+    additions: []
+    highlights:
+      - Ruby client regenerated using generator version 0.17.0.
+  - date: '2023-10-08'
+    source: client-library
+    version: google-apis-indexing_v3 0.14.0
+    breaking: false
+    additions: []
+    highlights:
+      - >-
+        Last release that names a discovery revision change: "Regenerated from discovery document
+        revision 20230927." The most recent evidence of an actual contract change on this API.
+  - date: '2023-09-11'
+    source: docs
+    version: null
+    breaking: false
+    additions: []
+    highlights:
+      - >-
+        "Clarifying Indexing API usage guidelines" — Google clarified that submissions are subject to
+        spam detection and that attempts to exceed quota may result in revoked access.
+  - date: '2023-09-04'
+    source: docs
+    version: null
+    breaking: false
+    additions: []
+    highlights:
+      - >-
+        "Clarifying quota and usage of the Indexing API" — clarified that the default quota is for
+        initial setup, documented how to request approval and quota, and corrected a documentation error
+        for DefaultRequestsPerMinutePerProject (always a 380 quota).
+window:
+  from: '2023-09-04'
+  to: '2026-08-05'
+  entry_count: 9

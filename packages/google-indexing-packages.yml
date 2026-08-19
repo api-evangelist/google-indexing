@@ -1,0 +1,109 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.google.com/search/apis/indexing-api/v3/libraries
+note: >-
+  Google does not ship a dedicated "Indexing API" SDK. It ships the Indexing API v3 surface inside its
+  per-language Google API client libraries, which are code-generated from the same Google API Discovery
+  Document this repo captures at openapi/_original/google-indexing-discovery-v3.json. Every version and
+  publish date below was read from the registry metadata endpoint on 2026-08-13, not from prose.
+docs: https://developers.google.com/search/apis/indexing-api/v3/libraries
+packages:
+  - language: javascript
+    name: '@googleapis/indexing'
+    registry: npm
+    url: https://www.npmjs.com/package/@googleapis/indexing
+    repository: https://github.com/googleapis/google-api-nodejs-client
+    official: true
+    scope: indexing-api-only
+    version: 7.0.0
+    published: '2026-08-03'
+    install: npm install @googleapis/indexing
+  - language: javascript
+    name: googleapis
+    registry: npm
+    url: https://www.npmjs.com/package/googleapis
+    repository: https://github.com/googleapis/google-api-nodejs-client
+    official: true
+    scope: all-google-apis
+    version: 174.0.1
+    published: '2026-08-05'
+    install: npm install googleapis
+  - language: python
+    name: google-api-python-client
+    registry: pypi
+    url: https://pypi.org/project/google-api-python-client/
+    repository: https://github.com/googleapis/google-api-python-client
+    official: true
+    scope: all-google-apis
+    version: 2.198.0
+    published: '2026-06-25'
+    install: pip install google-api-python-client
+    note: >-
+      Discovery-based client; the Indexing API is reached with
+      build('indexing', 'v3', credentials=...). There is no indexing-only PyPI package.
+  - language: ruby
+    name: google-apis-indexing_v3
+    registry: rubygems
+    url: https://rubygems.org/gems/google-apis-indexing_v3
+    repository: https://github.com/googleapis/google-api-ruby-client/tree/main/generated/google-apis-indexing_v3
+    official: true
+    scope: indexing-api-only
+    version: 0.19.0
+    published: '2026-06-21'
+    install: gem install google-apis-indexing_v3
+  - language: dotnet
+    name: Google.Apis.Indexing.v3
+    registry: nuget
+    url: https://www.nuget.org/packages/Google.Apis.Indexing.v3
+    repository: https://github.com/googleapis/google-api-dotnet-client
+    official: true
+    scope: indexing-api-only
+    version: 1.74.0.3191
+    published: '2026-05-12'
+    install: dotnet add package Google.Apis.Indexing.v3
+  - language: go
+    name: google.golang.org/api/indexing/v3
+    registry: pkg.go.dev
+    url: https://pkg.go.dev/google.golang.org/api/indexing/v3
+    repository: https://github.com/googleapis/google-api-go-client
+    official: true
+    scope: all-google-apis
+    version: v0.293.0
+    published: '2026-08-11'
+    install: go get google.golang.org/api/indexing/v3
+    note: Version/date are for the umbrella google.golang.org/api module read from proxy.golang.org.
+  - language: java
+    name: com.google.apis:google-api-services-indexing
+    registry: maven-central
+    url: https://central.sonatype.com/artifact/com.google.apis/google-api-services-indexing
+    repository: https://github.com/googleapis/google-api-java-client
+    javadoc: https://googleapis.dev/java/google-api-services-indexing/latest/
+    official: true
+    scope: indexing-api-only
+    version: v3-rev20230927-2.0.0
+    published: '2023-10-04'
+    install: 'Maven: com.google.apis:google-api-services-indexing:v3-rev20230927-2.0.0'
+    note: >-
+      DECAY SIGNAL. The Java artifact has not been regenerated since 2023-10-04 and is still pinned to
+      discovery revision 20230927, while the live discovery document is at revision 20260805 (read
+      2026-08-13). The Indexing API surface itself has not changed in that window (still two methods),
+      so the stale pin is not currently a functional gap — but a Java consumer cannot tell that from
+      the registry.
+  - language: php
+    name: google/apiclient
+    registry: packagist
+    url: https://packagist.org/packages/google/apiclient
+    repository: https://github.com/googleapis/google-api-php-client
+    official: true
+    scope: all-google-apis
+    version: v2.19.4
+    published: '2026-06-29'
+    install: composer require google/apiclient
+    note: >-
+      The Indexing service class ships in the google/apiclient-services dependency
+      (Google\Service\Indexing).
+counts:
+  total: 8
+  official: 8
+  indexing_api_only: 4
+  all_google_apis: 4
