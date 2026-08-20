@@ -42,7 +42,8 @@ apis:
   description: The urlNotifications API from Google Indexing — 1 operation(s) for urlnotifications.
   humanURL: https://developers.google.com/search/apis/indexing-api/v3/quickstart
   baseURL: https://indexing.googleapis.com/v3
-  tags:
+  tags: []
+  tags_raw:
   - urlNotifications
   properties:
   - type: OpenAPI
