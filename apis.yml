@@ -104,6 +104,8 @@ apis:
   - type: SpectralRules
     url: rules/google-indexing-spectral-rules.yml
 common:
+  - type: Website
+    url: https://www.google.com/
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/google-indexing/overview
   - type: AgenticAccess
@@ -188,3 +190,5 @@ x-enrichment:
   status: enriched
   artifacts_added: 20
   pass: local-v1
+x-parent: google
+x-relationship: product
