@@ -50,7 +50,7 @@ tags:
   - URLs
 apis:
 - aid: google-indexing:google-indexing-urlnotifications-api
-  name: Google Indexing urlNotifications API
+  name: Google Indexing URL Notifications API
   description: The urlNotifications API from Google Indexing — 1 operation(s) for urlnotifications.
   humanURL: https://developers.google.com/search/apis/indexing-api/v3/quickstart
   baseURL: https://indexing.googleapis.com/v3

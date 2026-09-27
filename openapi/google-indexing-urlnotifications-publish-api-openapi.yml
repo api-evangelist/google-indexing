@@ -52,6 +52,11 @@ components:
           $ref: '#/components/schemas/UrlNotification'
         latestRemove:
           $ref: '#/components/schemas/UrlNotification'
+    PublishUrlNotificationResponse:
+      type: object
+      properties:
+        urlNotificationMetadata:
+          $ref: '#/components/schemas/UrlNotificationMetadata'
     UrlNotification:
       type: object
       required:
@@ -72,11 +77,6 @@ components:
           type: string
           format: date-time
           description: The time of the notification.
-    PublishUrlNotificationResponse:
-      type: object
-      properties:
-        urlNotificationMetadata:
-          $ref: '#/components/schemas/UrlNotificationMetadata'
   securitySchemes:
     OAuth2:
       type: oauth2

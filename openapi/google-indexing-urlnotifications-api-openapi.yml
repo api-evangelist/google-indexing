@@ -41,6 +41,17 @@ paths:
       - urlNotifications
 components:
   schemas:
+    UrlNotificationMetadata:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: The URL for which metadata is returned.
+        latestUpdate:
+          $ref: '#/components/schemas/UrlNotification'
+        latestRemove:
+          $ref: '#/components/schemas/UrlNotification'
     UrlNotification:
       type: object
       required:
@@ -61,17 +72,6 @@ components:
           type: string
           format: date-time
           description: The time of the notification.
-    UrlNotificationMetadata:
-      type: object
-      properties:
-        url:
-          type: string
-          format: uri
-          description: The URL for which metadata is returned.
-        latestUpdate:
-          $ref: '#/components/schemas/UrlNotification'
-        latestRemove:
-          $ref: '#/components/schemas/UrlNotification'
   securitySchemes:
     OAuth2:
       type: oauth2
