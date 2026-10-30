@@ -1,4 +1,4 @@
-# Google Indexing (google-indexing)
+# Google Indexing
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,67 +64,171 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-The Google Indexing API allows site owners to directly notify Google when pages are added or removed. It enables requesting crawling for updated content and notifying of page removals, leading to fresher content in search results. Primarily intended for sites with job postings or livestream structured data.
+The Google Indexing API lets a site owner tell Google directly when a page has been added, updated, or removed, instead of waiting for a crawl. It is a two-operation API — publish a URL notification, and read back the latest notification metadata for a URL. Google restricts its use to pages carrying JobPosting structured data, or BroadcastEvent embedded in a VideoObject. It is free of charge, capped by default at 200 publish requests per day per Google Cloud project, and gated on Search Console ownership verification rather than on price.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/google-indexing/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/google-indexing/refs/heads/main/apis.yml)
+**Areas:** Crawling · Google · Indexing · Search · SEO · URLs
 
-## Scope
+## Google Indexing on APIs.io
 
-- **Type:** Index
+Everything profiled for Google Indexing is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/google-indexing/](https://apis.io/providers/google-indexing/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (2)
 
-- Crawling
-- Google
-- Indexing
-- Search
-- SEO
-- URLs
+- [Google Indexing URL Notifications API](https://apis.io/apis/google-indexing/google-indexing-urlnotifications-api/) — The urlNotifications API from Google Indexing — 1 operation(s) for urlnotifications.
+- [Google Indexing urlNotifications:publish API](https://apis.io/apis/google-indexing/google-indexing-urlnotifications-publish-api/) — The urlNotifications:publish API from Google Indexing — 1 operation(s) for urlnotifications:publish.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-13
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-### Google Indexing API
+Model Context Protocol servers that expose the API to agents.
 
-Allows site owners to notify Google directly when pages are updated or removed, enabling faster crawling and fresher search results for job postings and livestream content.
+- [google-indexing](https://apis.io/servers/google-indexing/google-indexing/)
 
-- **Human URL:** [https://developers.google.com/search/apis/indexing-api/v3/quickstart](https://developers.google.com/search/apis/indexing-api/v3/quickstart)
-- **Base URL:** `https://indexing.googleapis.com/v3`
+#### Agentic access (1)
 
-#### Tags
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- Crawling
-- Indexing
-- URLs
+- [Google Indexing Agentic Access](https://apis.io/agentic-access/google-indexing/google-indexing-agentic-access/)
 
-#### Properties
+#### JSON Schema (1)
 
-- [Documentation](https://developers.google.com/search/apis/indexing-api/v3/reference/rest)
-- [OpenAPI](openapi/openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/openapi.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/openapi.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Authentication](https://developers.google.com/search/apis/indexing-api/v3/prereqs)
-- [Getting Started](https://developers.google.com/search/apis/indexing-api/v3/quickstart)
-- [JSON Schema](json-schema/UrlNotification.json) — [JSON Schema](https://json-schema.org/specification)
-- [Spectral  Rules](rules/google-indexing-spectral-rules.yml)
+The data models the API reads and writes.
 
-## Common Properties
+- [Google Indexing URL Notification](https://apis.io/schemas/google-indexing/UrlNotification/)
 
-- [Portal](https://developers.google.com/search/apis/indexing-api)
-- [Getting Started](https://developers.google.com/search/apis/indexing-api/v3/quickstart)
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [context Context](https://apis.io/jsonld/google-indexing/context/)
+
+#### Collections (5)
+
+Postman and Open Collection request collections.
+
+- [Google Indexing urlNotifications API](https://apis.io/collections/google-indexing/open-google-indexing-urlnotifications-api/)
+- [Google Indexing urlNotifications urlNotifications:publish API](https://apis.io/collections/google-indexing/open-google-indexing-urlnotifications-publish-api/)
+- [Google Indexing API](https://apis.io/collections/google-indexing/open-openapi/)
+- [Google Indexing urlNotifications API](https://apis.io/collections/google-indexing/postman-google-indexing-urlnotifications-api/)
+- [Google Indexing urlNotifications urlNotifications:publish API](https://apis.io/collections/google-indexing/postman-google-indexing-urlnotifications-publish-api/)
+
+#### Overlays (2)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Google Indexing Urlnotifications Api Overlay](https://apis.io/overlays/google-indexing/google-indexing-urlnotifications-api-overlay/)
+- [Google Indexing Urlnotifications Publish Api Overlay](https://apis.io/overlays/google-indexing/google-indexing-urlnotifications-publish-api-overlay/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Google Indexing — jsonschema rules](https://apis.io/rules/google-indexing/google-indexing-jsonschema-spectral-rules/)
+- [Google Indexing API Rules](https://apis.io/rules/google-indexing/google-indexing-spectral-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Google Indexing Authentication](https://apis.io/security/google-indexing/google-indexing-authentication/)
+- [Google Indexing Domain Security](https://apis.io/security/google-indexing/google-indexing-domain-security/)
+- [Google Indexing Vulnerability Disclosure](https://apis.io/security/google-indexing/google-indexing-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Google Indexing Scopes](https://apis.io/scopes/google-indexing/google-indexing-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Google Indexing Plans Pricing](https://apis.io/plans/google-indexing/google-indexing-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Google Indexing Rate Limits](https://apis.io/rate-limits/google-indexing/google-indexing-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Google Indexing Finops](https://apis.io/finops/google-indexing/google-indexing-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.google.com/)
 - [Documentation](https://developers.google.com/search/apis/indexing-api)
-- [Authentication](https://developers.google.com/search/apis/indexing-api/v3/prereqs)
-- [Terms of Service](https://developers.google.com/terms)
-- [Privacy Policy](https://policies.google.com/privacy)
-- [Status Page](https://status.cloud.google.com/)
-- [Support](https://developers.google.com/search/apis/indexing-api/v3/support)
-- [JSON-LD](json-ld/context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+- [Getting started](https://developers.google.com/search/apis/indexing-api/v3/quickstart)
+- [API reference](https://developers.google.com/search/apis/indexing-api/v3/reference/indexing/rest/v3/urlNotifications)
+- [Pricing](https://developers.google.com/search/apis/indexing-api/v3/quota-pricing)
+- [Sign up](https://console.cloud.google.com/apis/library/indexing.googleapis.com)
+- [Support](https://support.google.com/webmasters/community)
+- [Blog](https://developers.google.com/search/blog)
+- [Terms of service](https://developers.google.com/terms)
+- [Privacy policy](https://policies.google.com/privacy)
+- [GitHub](https://github.com/googleapis)
+- [Status](https://status.search.google.com/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 62.7** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 60.5 |
+| Contract governance | 18.2 |
+| Operational transparency | 76.3 |
+| Developer ergonomics | 69.6 |
+| Access clarity | 59.2 |
+
+**Agent readiness 28.6** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | documented (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 40.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/google-indexing/](https://apis.io/providers/google-indexing/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Google Indexing: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/google-indexing/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
