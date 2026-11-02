@@ -1,0 +1,111 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Google Indexing
+providerId: google-indexing
+created: '2026-05-04'
+modified: '2026-08-13'
+generated: '2026-08-13'
+method: searched
+source: https://developers.google.com/search/apis/indexing-api/v3/quota-pricing
+docs: https://developers.google.com/search/apis/indexing-api/v3/quota-pricing
+note: >-
+  Replaces the 2026-05-04 bulk-sweep scaffold, which invented Free / Professional / Enterprise tiers with
+  placeholder prices. Google publishes no tiers for the Indexing API. Its Quota and pricing page states
+  plainly: "All use of the Indexing API is available without payment." There is one access level — a
+  default quota, with an approval form for more.
+tags:
+  - Crawling
+  - Google
+  - Indexing
+  - Search
+  - SEO
+  - URLs
+description: >-
+  The Google Indexing API v3 is free of charge and has no priced plans. Access is governed by a default
+  per-project quota and by an eligibility gate: the API may only be used for pages carrying JobPosting,
+  or BroadcastEvent embedded in a VideoObject, structured data. Additional quota is granted through an
+  approval form rather than purchased.
+pricingModel: free
+currency: null
+plan_count: 1
+plans:
+  - id: google-indexing-default
+    name: Default quota
+    type: free
+    price: '0.00'
+    currency: USD
+    billingPeriod: none
+    description: >-
+      The only published access level. Free of charge. Provisioned per Google Cloud project once the
+      Indexing API is enabled and a service account has been added as a delegated site owner in Search
+      Console.
+    signup: https://console.cloud.google.com/apis/library/indexing.googleapis.com
+    prerequisites: https://developers.google.com/search/apis/indexing-api/v3/prereqs
+    entries:
+      - label: Publish requests
+        name: DefaultPublishRequestsPerDayPerProject
+        type: quota
+        metric: publish_requests
+        limit: 200
+        timeFrame: day
+        unit: 1
+        price: '0.00'
+        overage: none
+        note: Hard default; resets at midnight Pacific Time. Exceeding it returns 403 dailyLimitExceeded.
+      - label: Metadata requests
+        name: DefaultMetadataRequestsPerMinutePerProject
+        type: rate
+        metric: requests_per_minute
+        limit: 180
+        timeFrame: minute
+        unit: 1
+        price: '0.00'
+      - label: All requests
+        name: DefaultRequestsPerMinutePerProject
+        type: rate
+        metric: requests_per_minute
+        limit: 380
+        timeFrame: minute
+        unit: 1
+        price: '0.00'
+    elements:
+      - name: Google Indexing API v3
+      - name: Public documentation
+      - name: Google API Console quota dashboard
+      - name: Quota increase by approval form
+eligibility:
+  restricted: true
+  allowed_content:
+    - JobPosting structured data
+    - BroadcastEvent embedded in a VideoObject
+  note: >-
+    Eligibility, not price, is the gate on this API. Google states the Indexing API can only be used to
+    crawl pages with JobPosting or BroadcastEvent markup.
+  source: https://developers.google.com/search/apis/indexing-api/v3/using-api
+quota_increase:
+  price: '0.00'
+  process: approval form
+  source: https://developers.google.com/search/apis/indexing-api/v3/quota-pricing#request-quota
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - free
+  units:
+  - rate
+  - request
+  plans:
+  - name: Default quota
+    access: free
+    model: free
+    model_how: derived
+    units:
+    - rate
+    - request
+    periods:
+    - day
+    - minute
