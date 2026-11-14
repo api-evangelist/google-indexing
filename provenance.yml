@@ -5,9 +5,18 @@ artifacts:
   agentic-access/google-indexing-agentic-access.yml:
     method: generated
     evidence: declared in the artifact
+  ai-preferences/google-indexing-ai-preferences.yml:
+    method: harvested
+    evidence: declared in the artifact
   authentication/google-indexing-authentication.yml:
     method: searched
     evidence: declared in the artifact
+  certification/observations-2026-11-11.jsonl:
+    method: unknown
+    evidence: no authorship recorded
+  certification/status.yml:
+    method: unknown
+    evidence: no authorship recorded
   changelog/google-indexing-changelog.yml:
     method: searched
     evidence: declared in the artifact
@@ -18,11 +27,11 @@ artifacts:
     method: derived
     evidence: openapi/google-indexing-urlnotifications-api
   collections/google-indexing-urlnotifications-publish-api.opencollection.json:
-    method: derived
-    evidence: openapi/google-indexing-urlnotifications-publish-api
+    method: unknown
+    evidence: no authorship recorded
   collections/google-indexing-urlnotifications-publish-api.postman_collection.json:
-    method: derived
-    evidence: openapi/google-indexing-urlnotifications-publish-api
+    method: unknown
+    evidence: no authorship recorded
   collections/openapi.opencollection.json:
     method: unknown
     evidence: no authorship recorded
@@ -35,11 +44,24 @@ artifacts:
   conventions/google-indexing-conventions.yml:
     method: searched
     evidence: declared in the artifact
+  data-license/google-indexing-data-license.yml:
+    method: harvested
+    evidence: declared in the artifact
   data-model/google-indexing-data-model.yml:
     method: derived
     evidence: declared in the artifact
+  discovery/indexing-v3.json:
+    method: harvested
+    evidence: byte-identical to https://indexing.googleapis.com/$discovery/rest?version=v3 (sha256 8ff54789a809,
+      fetched 2026-11-12T01:34:41+00:00)
+  eligibility/google-indexing-eligibility.yml:
+    method: harvested
+    evidence: declared in the artifact
   errors/google-indexing-error-codes.yml:
     method: searched
+    evidence: declared in the artifact
+  errors/google-indexing-problem-types.yml:
+    method: derived
     evidence: declared in the artifact
   finops/google-indexing-finops.yml:
     method: derived
@@ -47,6 +69,9 @@ artifacts:
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
+  hosts/google-indexing-hosts.yml:
+    method: derived
+    evidence: declared in the artifact
   integrations/_index.yml:
     method: generated
     evidence: carries an API Evangelist house phrase
@@ -56,13 +81,25 @@ artifacts:
   json-ld/context.jsonld:
     method: unknown
     evidence: no authorship recorded
+  json-ld/google-indexing-context.jsonld:
+    method: unknown
+    evidence: no authorship recorded
   json-schema/UrlNotification.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/google-indexing-publish-url-notification-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/google-indexing-url-notification-metadata-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/google-indexing-url-notification-schema.json:
     method: unknown
     evidence: no authorship recorded
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-02T082323.yml:
+  kin/checks-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -128,6 +165,9 @@ artifacts:
   kin/score-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-06T143934.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/google-indexing-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
@@ -137,18 +177,11 @@ artifacts:
   mcp/google-indexing-mcp.yml:
     method: derived
     evidence: declared in the artifact
-  openapi/_original/google-indexing-discovery-v3.json:
-    method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
-  openapi/_original/openapi.yml:
+  openapi/_original/google-indexing-url-notifications-api-openapi.yml:
     method: harvested
     evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
       to the provider's source is unverified
   openapi/google-indexing-urlnotifications-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
-  openapi/google-indexing-urlnotifications-publish-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   overlays/google-indexing-urlnotifications-api-overlay.yaml:
@@ -160,6 +193,9 @@ artifacts:
   packages/google-indexing-packages.yml:
     method: searched
     evidence: declared in the artifact
+  patterns/google-indexing-patterns.yml:
+    method: derived
+    evidence: declared in the artifact
   plans/google-indexing-plans-pricing.yml:
     method: searched
     evidence: declared in the artifact
@@ -167,12 +203,18 @@ artifacts:
     method: derived
     evidence: openapi/google-indexing-urlnotifications-api
   postman/google-indexing-urlnotifications-publish-api.postman_collection.json:
-    method: derived
-    evidence: openapi/google-indexing-urlnotifications-publish-api
+    method: unknown
+    evidence: no authorship recorded
+  privacy/google-indexing-privacy-policy.yml:
+    method: harvested
+    evidence: declared in the artifact
   rate-limits/google-indexing-rate-limits.yml:
     method: searched
     evidence: declared in the artifact
   rules/google-indexing-jsonschema-spectral-rules.yml:
+    method: generated
+    evidence: declared in the artifact
+  rules/google-indexing-rules.yml:
     method: generated
     evidence: declared in the artifact
   rules/google-indexing-spectral-rules.yml:
@@ -201,6 +243,15 @@ artifacts:
     evidence: declared in the artifact
   sla/google-indexing-sla.yml:
     method: generated
+    evidence: declared in the artifact
+  terms/google-indexing-terms-of-service.yml:
+    method: harvested
+    evidence: declared in the artifact
+  vendors/google-indexing-vendors.yml:
+    method: unknown
+    evidence: no authorship recorded
+  vocabulary/google-indexing-vocabulary.yml:
+    method: derived
     evidence: declared in the artifact
   well-known/google-indexing-oauth-authorization-server.json:
     method: unknown
